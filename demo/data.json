@@ -1,0 +1,647 @@
+{
+  "values": [
+    [
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "Район"
+      },
+      {
+        "span": 2,
+        "value": "Адмиралтейский",
+        "isLink": false
+      },
+      {
+        "span": 2,
+        "value": "Адмиралтейский",
+        "isLink": false
+      },
+      {
+        "span": 2,
+        "value": "Калининский",
+        "isLink": false
+      },
+      {
+        "span": 2,
+        "value": "Калининский",
+        "isLink": false
+      },
+      {
+        "span": 2,
+        "value": "Петроградский",
+        "isLink": false
+      },
+      {
+        "span": 2,
+        "value": "Петроградский",
+        "isLink": false
+      }
+    ],
+    [
+      {
+        "value": "Группа"
+      },
+      {
+        "value": "КФО"
+      },
+      {
+        "value": "Отрасль"
+      },
+      {
+        "value": "Сумма, %"
+      },
+      {
+        "value": "Среднее 2"
+      },
+      {
+        "value": "Сумма, %"
+      },
+      {
+        "value": "Среднее 2"
+      },
+      {
+        "value": "Сумма, %"
+      },
+      {
+        "value": "Среднее 2"
+      }
+    ],
+    [
+      {
+        "span": 4,
+        "value": "Диспансер",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Внебюджет",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Здравоохранение",
+        "isLink": false
+      },
+      {
+        "value": "55300.05%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-zbzTogys0"
+      },
+      {
+        "value": "3 907.90",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "2400%",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-zbzTogys0"
+      },
+      {
+        "value": "24 444.06",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-k1kIzDI-r"
+      }
+    ],
+    [
+      {
+        "span": 4,
+        "value": "Диспансер",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СубсидииНаГосзадание",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Здравоохранение",
+        "isLink": false
+      },
+      {
+        "value": "777999.85%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:1,field-Cp1ogUDQT:0;field-zbzTogys0"
+      },
+      {
+        "value": "16 666.37",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:1,field-Cp1ogUDQT:0;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "2207200.06%",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:1,field-Cp1ogUDQT:0;field-zbzTogys0"
+      },
+      {
+        "value": "19 886.99",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:1,field-Cp1ogUDQT:0;field-k1kIzDI-r"
+      }
+    ],
+    [
+      {
+        "span": 4,
+        "value": "Диспансер",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СредстваОМС",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Здравоохранение",
+        "isLink": false
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "90399.97%",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:4,field-Cp1ogUDQT:0;field-zbzTogys0"
+      },
+      {
+        "value": "13 299.62",
+        "id": "field-hkCAYUdd6:2,field-2b5AOLQJY:0,field-VQgqHl-Gk:4,field-Cp1ogUDQT:0;field-k1kIzDI-r"
+      }
+    ],
+    [
+      {
+        "span": 4,
+        "value": "Диспансер",
+        "isLink": false
+      },
+      {
+        "value": "Итого",
+        "styles": ["total"]
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "131 825 404.12",
+        "styles": ["total"]
+      },
+      {
+        "value": "20 574.27",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      },
+      {
+        "value": "451 555 164.49",
+        "styles": ["total"]
+      },
+      {
+        "value": "57 630.67",
+        "styles": ["total"]
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Детскийсад",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Внебюджет",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "180899.88%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:1;field-zbzTogys0"
+      },
+      {
+        "value": "6 439.23",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:1;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Детскийсад",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СубсидииНаГосзадание",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "3638599.88%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:1;field-zbzTogys0"
+      },
+      {
+        "value": "13 863.56",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:1;field-k1kIzDI-r"
+      },
+      {
+        "value": "4515601.15%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:1;field-zbzTogys0"
+      },
+      {
+        "value": "19 514.93",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:1;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Детскийсад",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Бюджет",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "300%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:1;field-zbzTogys0"
+      },
+      {
+        "value": "27 845.00",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:1;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Детскийсад",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СубсидииНаИныеЦели",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "18500%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:1;field-zbzTogys0"
+      },
+      {
+        "value": "15 574.89",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:1;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Детскийсад",
+        "isLink": false
+      },
+      {
+        "value": "Итого",
+        "styles": ["total"]
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "507 404 368.04",
+        "styles": ["total"]
+      },
+      {
+        "value": "57 283.45",
+        "styles": ["total"]
+      },
+      {
+        "value": "892 864 964.06",
+        "styles": ["total"]
+      },
+      {
+        "value": "25 954.16",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Школаобщеобразовательная",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Внебюджет",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "49800.02%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "2 406.31",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": "247299.9%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "4 991.39",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:0,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Школаобщеобразовательная",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СубсидииНаГосзадание",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "3062199.99%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "17 840.67",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": "5465701.17%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "21 612.88",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:1,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Школаобщеобразовательная",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Бюджет",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "251499.91%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "11 945.31",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": "262600.05%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "13 817.90",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:2,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Школаобщеобразовательная",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "СубсидииНаИныеЦели",
+        "isLink": false
+      },
+      {
+        "span": 1,
+        "value": "Образование",
+        "isLink": false
+      },
+      {
+        "value": "15100%",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "14 258.51",
+        "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": "9300%",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:2;field-zbzTogys0"
+      },
+      {
+        "value": "9 820.25",
+        "id": "field-hkCAYUdd6:1,field-2b5AOLQJY:1,field-VQgqHl-Gk:3,field-Cp1ogUDQT:2;field-k1kIzDI-r"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      }
+    ],
+    [
+      {
+        "span": 5,
+        "value": "Школаобщеобразовательная",
+        "isLink": false
+      },
+      {
+        "value": "Итого",
+        "styles": ["total"]
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "579 710 817.46",
+        "styles": ["total"]
+      },
+      {
+        "value": "46 450.80",
+        "styles": ["total"]
+      },
+      {
+        "value": "1 230 838 233.39",
+        "styles": ["total"]
+      },
+      {
+        "value": "50 242.42",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      },
+      {
+        "value": "0.00",
+        "styles": ["total"]
+      }
+    ],
+    [
+      {
+        "value": "Итого",
+        "styles": ["total"]
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "1 218 940 589.62",
+        "styles": ["total"]
+      },
+      {
+        "value": "124 308.52",
+        "styles": ["total"]
+      },
+      {
+        "value": "2 123 703 197.45",
+        "styles": ["total"]
+      },
+      {
+        "value": "76 196.58",
+        "styles": ["total"]
+      },
+      {
+        "value": "451 555 164.49",
+        "styles": ["total"]
+      },
+      {
+        "value": "57 630.67",
+        "styles": ["total"]
+      }
+    ]
+  ],
+  "headRowsCount": 2,
+  "dataHeadColumnsCount": 3
+}
