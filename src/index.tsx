@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { render } from 'uhtml'
-import { TableRenderer } from './renderer'
+import { Table } from './renderer'
 import { TTableData } from './types'
 
 type TProps = {
@@ -13,7 +12,7 @@ const ReactTable: FC<TProps> = ({ table, seed }) => {
   const ref = useRef<any>()
 
   useEffect(() => {
-    render(ref.current, TableRenderer(table))
+    Table({ table, target: ref.current })
   }, [table, seed])
 
   return <div ref={ref} />

@@ -12,13 +12,20 @@ code {
 
 table {
   overflow: auto;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-left: 1px solid red;
+  border-bottom: 1px solid red;
 }
 
 td {
   border: 1px solid red;
+  border-left: none;
+  border-bottom: none;
   word-break: break-word;
-  padding: 4px;
   min-width: 150px;
   overflow: hidden;
+  background: #ffffff;
+  padding: 4px;
+  box-sizing: border-box;
 }

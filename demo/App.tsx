@@ -4,11 +4,7 @@ import { TTableData } from '../src/types'
 
 function App() {
   const [_, redraw] = useState(0)
-  const [data, setData] = useState<TTableData>({
-    values: [],
-    headRowsCount: 0,
-    dataHeadColumnsCount: 0,
-  })
+  const [data, setData] = useState<TTableData | null>(null)
 
   useEffect(() => {
     const name = 'big.json'
@@ -16,6 +12,8 @@ function App() {
       .then((response) => response.json())
       .then(setData)
   }, [])
+
+  if (!data) return 'loading...'
 
   return (
     <>
@@ -27,13 +25,7 @@ function App() {
       >
         redraw
       </button>
-      <ReactTable
-        table={{
-          ...data,
-          // values: data.values.slice(0, 50),
-        }}
-        seed={Math.random()}
-      />
+      <ReactTable table={data} seed={Math.random()} />
     </>
   )
 }

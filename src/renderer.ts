@@ -1,7 +1,9 @@
-import { html } from 'uhtml'
+import { html, render } from 'uhtml'
 import { TCellData, TTableData } from './types'
 
 type TRenderMeta = { [row: number]: { [column: number]: boolean } }
+
+const CELL_WIDTH = 150
 
 function Cell({
   cell,
@@ -40,7 +42,13 @@ function Cell({
     }
   }
 
-  return html`<td colspan=${colSpan} rowspan=${rowSpan} style=${'font-weight: bold'}>
+  return html`<td
+    colspan=${colSpan}
+    rowspan=${rowSpan}
+    style=${`font-weight: bold; position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
+      columnIndex * CELL_WIDTH
+    }px; width: 150px`}
+  >
     ${cell.value}
   </td>`
 }
@@ -88,4 +96,31 @@ function TableRenderer({ values: table, headRowsCount, dataHeadColumnsCount }: T
   `
 }
 
-export { TableRenderer }
+function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
+  const meta: TRenderMeta = {}
+
+  let start = 0
+  let count = 5
+
+  function redraw() {
+    render(
+      target,
+      TableRenderer({
+        values: table.values.slice(start, start + count),
+        dataHeadColumnsCount: table.dataHeadColumnsCount,
+        headRowsCount: table.headRowsCount - start,
+      })
+    )
+  }
+
+  redraw()
+
+  setInterval(() => {
+    ++start
+    redraw()
+  }, 1000)
+
+  redraw()
+}
+
+export { Table }
