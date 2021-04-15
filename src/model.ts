@@ -6,12 +6,11 @@ export type TVisibleTableData = TTableData & {
   stickyRows: TTableData['values']
 }
 
-const MIN_ROW_HEIGHT = 50
-
 class TableModel {
   private data: TTableData
   private rowHeights: number[]
   private areaHeight: number = 0
+  private additionalArea: number = 0
   private onChange: () => void
 
   private lastDataSnapshot: TVisibleTableData = {
@@ -33,10 +32,20 @@ class TableModel {
     return this.lastDataSnapshot
   }
 
-  constructor(data: TTableData, onChange: () => void) {
+  constructor(data: TTableData, onChange: () => void, minRowHeight: number) {
     this.data = data
-    this.rowHeights = new Array(data.values.length).fill(MIN_ROW_HEIGHT)
+    this.rowHeights = new Array(data.values.length).fill(minRowHeight)
     this.onChange = onChange
+  }
+
+  private getRowInfo(index: number) {
+    const span = this.data.values[index][0].span || 1
+    const height = this.rowHeights.slice(index, index + span).reduce((acc, value) => acc + value, 0)
+
+    return {
+      span,
+      height,
+    }
   }
 
   private commit() {
@@ -47,12 +56,15 @@ class TableModel {
     const visibleHeight =
       this.areaHeight -
       this.rowHeights.slice(0, this.data.headRowsCount).reduce((acc, value) => acc + value, 0)
-    const top = Math.max(0, this.scrollPosition - visibleHeight * 0.5)
-    const bottom = this.scrollPosition + visibleHeight * 1.5
+    const top = Math.max(0, this.scrollPosition - this.additionalArea)
+    const bottom = this.scrollPosition + visibleHeight + this.additionalArea
 
-    while (this.rowHeights[start] + offset < top) {
-      offset += this.rowHeights[start]
-      ++start
+    let rowInfo = this.getRowInfo(start)
+    while (rowInfo.height + offset < top) {
+      offset += rowInfo.height
+      start += rowInfo.span
+
+      rowInfo = this.getRowInfo(start)
     }
 
     let end = start + 1
@@ -85,8 +97,10 @@ class TableModel {
     }
   }
 
-  public setAreaHeight = (value: number) => {
-    this.areaHeight = value
+  public setAreaHeight = (height: number, additionalAreaHeight: number) => {
+    this.areaHeight = height
+    this.additionalArea = additionalAreaHeight
+
     this.commit()
   }
 

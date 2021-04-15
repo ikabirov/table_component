@@ -130,8 +130,8 @@ function TableContainer(
         onScroll(e.target.scrollTop)
       }}
     >
-      <div style="position: sticky; top: 0; z-index: 1">${headers}</div>
       <div style=${`height: ${height}px;`}>
+        <div style="position: sticky; top: 0; z-index: 1; margin-bottom: -1px">${headers}</div>
         <div style=${`transform: translateY(${offset}px)`}>${content}</div>
       </div>
     </div>
@@ -139,7 +139,7 @@ function TableContainer(
 }
 
 function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
-  const model = new TableModel(table, redraw)
+  const model = new TableModel(table, redraw, 40)
 
   function redraw() {
     const data = model.visibleTableData
@@ -175,7 +175,7 @@ function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
     updateHeights(data.startRowIndex, contentTable)
   }
 
-  model.setAreaHeight(900)
+  model.setAreaHeight(900, 300)
 }
 
 export { Table }
