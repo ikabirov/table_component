@@ -1,4 +1,5 @@
-import { html, render } from 'uhtml'
+import { html, render, Renderable } from 'uhtml'
+import { TableModel, TVisibleTableData } from './model'
 import { TCellData, TTableData } from './types'
 
 type TRenderMeta = { [row: number]: { [column: number]: boolean } }
@@ -42,34 +43,37 @@ function Cell({
     }
   }
 
-  return html`<td
-    colspan=${colSpan}
-    rowspan=${rowSpan}
-    style=${`font-weight: bold; position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
-      columnIndex * CELL_WIDTH
-    }px; width: 150px`}
-  >
-    ${cell.value}
+  const style =
+    isRowHeader && rowIndex === 0
+      ? `font-weight: bold; position: sticky; top: 0px; width: 150px; background: #efefef;z-index: ${
+          isColumnHeader ? 2 : 1
+        };left: ${isColumnHeader ? columnIndex * CELL_WIDTH + 'px' : 'unset'};`
+      : `font-weight: bold; position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
+          columnIndex * CELL_WIDTH
+        }px; width: 150px; background: ${isRowHeader || isColumnHeader ? '#efefef' : '#fff'}`
+
+  return html`<td colspan=${colSpan} rowspan=${rowSpan} style=${style}>
+    <div style="">${cell.value}</div>
   </td>`
 }
 
 function Row({
+  key,
   row,
   rowIndex,
   isRowHeader,
   dataHeadColumnsCount,
   meta,
 }: {
+  key: object
   row: TCellData[]
   rowIndex: number
   isRowHeader: boolean
   dataHeadColumnsCount: number
   meta: TRenderMeta
 }) {
-  return html` <tr
-    ref=${(node: HTMLTableRowElement) => {
-      setTimeout(() => console.log(node.clientHeight))
-    }}
+  return html.for(key, rowIndex.toString())`<tr
+    data-rowIndex=${rowIndex}
   >
     ${row.flatMap((cell, columnIndex) =>
       Cell({
@@ -84,43 +88,94 @@ function Row({
   </tr>`
 }
 
-function TableRenderer({ values: table, headRowsCount, dataHeadColumnsCount }: TTableData) {
+function TableRenderer(
+  key: object,
+  start: number,
+  { values: table, headRowsCount, dataHeadColumnsCount }: TTableData
+) {
   const meta: TRenderMeta = {}
 
   return html`
     <table>
-      ${table.map((row, rowIndex) =>
-        Row({ row, rowIndex, isRowHeader: headRowsCount > rowIndex, dataHeadColumnsCount, meta })
-      )}
+      ${table.map((row, index) => {
+        const rowIndex = start + index
+        return Row({
+          key,
+          row,
+          rowIndex,
+          isRowHeader: headRowsCount > rowIndex,
+          dataHeadColumnsCount,
+          meta,
+        })
+      })}
     </table>
   `
 }
 
-function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
-  const meta: TRenderMeta = {}
+function TableContainer(
+  content: Renderable,
+  headers: Renderable | null,
+  height: number,
+  offset: number,
+  onScroll: (value: number) => void,
+  scroll: number
+) {
+  return html`
+    <div
+      style="width: 100%; height: 900px; overflow: auto"
+      ref=${(node: HTMLDivElement) => {
+        node.scroll(node.scrollLeft, scroll)
+      }}
+      onscroll=${(e: any) => {
+        onScroll(e.target.scrollTop)
+      }}
+    >
+      <div style="position: sticky; top: 0; z-index: 1">${headers}</div>
+      <div style=${`height: ${height}px;`}>
+        <div style=${`transform: translateY(${offset}px)`}>${content}</div>
+      </div>
+    </div>
+  `
+}
 
-  let start = 0
-  let count = 5
+function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
+  const model = new TableModel(table, redraw)
 
   function redraw() {
+    const data = model.visibleTableData
+
+    const content = TableRenderer(target, data.startRowIndex, data)
+    const headers = data.stickyRows.length
+      ? TableRenderer(model, 0, {
+          dataHeadColumnsCount: data.dataHeadColumnsCount,
+          headRowsCount: data.stickyRows.length,
+          values: data.stickyRows,
+        })
+      : null
+
     render(
       target,
-      TableRenderer({
-        values: table.values.slice(start, start + count),
-        dataHeadColumnsCount: table.dataHeadColumnsCount,
-        headRowsCount: table.headRowsCount - start,
-      })
+      TableContainer(
+        content,
+        headers,
+        model.contentHeight,
+        data.offset,
+        model.setScrollPosition,
+        model.scrollPosition
+      )
     )
+
+    const [headerTable, contentTable] = target.querySelectorAll('table')
+
+    function updateHeights(index: number, table: HTMLTableElement) {
+      const rowHeights = [...(table?.children || [])].map((row) => row.clientHeight)
+      model.setRowHeights(index, rowHeights)
+    }
+    updateHeights(0, headerTable)
+    updateHeights(data.startRowIndex, contentTable)
   }
 
-  redraw()
-
-  setInterval(() => {
-    ++start
-    redraw()
-  }, 1000)
-
-  redraw()
+  model.setAreaHeight(900)
 }
 
 export { Table }

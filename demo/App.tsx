@@ -7,6 +7,7 @@ function App() {
   const [data, setData] = useState<TTableData | null>(null)
 
   useEffect(() => {
+    // const name = 'big_invert.json'
     const name = 'big.json'
     fetch(`./demo/${name}`)
       .then((response) => response.json())
