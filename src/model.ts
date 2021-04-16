@@ -3,7 +3,7 @@ import { TTableData } from './types'
 export type TVisibleTableData = TTableData & {
   offset: number
   startRowIndex: number
-  stickyRows: TTableData['values']
+  headerRows: TTableData['values']
 }
 
 class TableModel {
@@ -19,7 +19,7 @@ class TableModel {
     offset: 0,
     startRowIndex: 0,
     values: [],
-    stickyRows: [],
+    headerRows: [],
   }
 
   public scrollPosition: number = 0
@@ -83,7 +83,7 @@ class TableModel {
         dataHeadColumnsCount: this.data.dataHeadColumnsCount,
         headRowsCount: 0,
         values: this.data.values.slice(start, end),
-        stickyRows: this.data.values.slice(0, this.data.headRowsCount),
+        headerRows: this.data.values.slice(0, this.data.headRowsCount),
       }
 
       this.onChange()

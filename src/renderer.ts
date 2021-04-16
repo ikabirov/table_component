@@ -144,14 +144,12 @@ function Table({ table, target }: { table: TTableData; target: HTMLElement }) {
   function redraw() {
     const data = model.visibleTableData
 
+    const headers = TableRenderer(model, 0, {
+      dataHeadColumnsCount: data.dataHeadColumnsCount,
+      headRowsCount: data.headerRows.length,
+      values: data.headerRows,
+    })
     const content = TableRenderer(target, data.startRowIndex, data)
-    const headers = data.stickyRows.length
-      ? TableRenderer(model, 0, {
-          dataHeadColumnsCount: data.dataHeadColumnsCount,
-          headRowsCount: data.stickyRows.length,
-          values: data.stickyRows,
-        })
-      : null
 
     render(
       target,
