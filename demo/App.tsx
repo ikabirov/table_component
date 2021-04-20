@@ -15,7 +15,7 @@ function App() {
       .then(setData)
   }, [])
 
-  if (!data) return 'loading...'
+  if (!data) return <div>loading...</div>
 
   return (
     <>

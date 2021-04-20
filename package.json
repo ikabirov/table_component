@@ -1,6 +1,11 @@
 {
-  "name": "demo",
-  "version": "0.0.0",
+  "name": "table-component",
+  "version": "0.0.1",
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "main": "dist/src/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

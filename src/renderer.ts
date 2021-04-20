@@ -53,7 +53,11 @@ function Cell({
         }px; width: 150px; background: ${isRowHeader || isColumnHeader ? '#efefef' : '#fff'}`
 
   return html`<td colspan=${colSpan} rowspan=${rowSpan} style=${style}>
-    <div style="">${cell.value}</div>
+    <div
+      style="display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow:hidden"
+    >
+      ${cell.value}
+    </div>
   </td>`
 }
 
