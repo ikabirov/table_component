@@ -18,7 +18,7 @@ function App() {
   if (!data) return <div>loading...</div>
 
   return (
-    <>
+    <div className={styles.app}>
       <button onClick={() => setData({ ...data })}>new data</button>
       <button
         onClick={() => {
@@ -28,7 +28,7 @@ function App() {
         redraw
       </button>
       <ReactTable table={data} seed={Math.random()} />
-    </>
+    </div>
   )
 }
 

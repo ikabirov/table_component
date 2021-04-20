@@ -1,7 +1,7 @@
 import { html, render, Renderable } from 'uhtml'
 import { TableModel, TVisibleTableData } from './model'
 import { TCellData, TTableData } from './types'
-
+import './index.css'
 type TRenderMeta = { [row: number]: { [column: number]: boolean } }
 
 const CELL_WIDTH = 150
