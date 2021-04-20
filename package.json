@@ -1,6 +1,6 @@
 {
   "name": "table-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "dist"
   ],
@@ -18,10 +18,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
   },
   "devDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
