@@ -19,6 +19,17 @@ type TUseCase = {
 
 type TTests = TUseCase[]
 
+globalThis.ResizeObserver = class ResizeObserver {
+  observe() {
+    // do nothing
+  }
+  unobserve() {
+    // do nothing
+  }
+
+  disconnect() {}
+}
+
 const data: TTableData = {
   headRowsCount: 1,
   dataHeadColumnsCount: 2,
@@ -79,7 +90,7 @@ const allTests: TTests = [
           offset: 50,
           startRowIndex: 1,
           headerRows: [],
-          values: data.values.slice(1, 4),
+          values: data.values.slice(1, 5),
         },
       },
       {
@@ -107,21 +118,6 @@ const allTests: TTests = [
             data: dataWithoutHeaderRows,
             minRowHeight: 50,
             areaHeight: 120,
-            additionalAreaHeight: 15,
-            scrollPosition: 60,
-            expected: {
-              headRowsCount: 0,
-              dataHeadColumnsCount: 2,
-              offset: 0,
-              startRowIndex: 0,
-              headerRows: [],
-              values: data.values.slice(0, 4),
-            },
-          },
-          {
-            data: dataWithoutHeaderRows,
-            minRowHeight: 50,
-            areaHeight: 120,
             additionalAreaHeight: 25,
             scrollPosition: 60,
             expected: {
@@ -141,6 +137,26 @@ const allTests: TTests = [
     name: 'with header rows',
     fixtures: [
       {
+        name: 'empty',
+        data: {
+          dataHeadColumnsCount: 0,
+          headRowsCount: 0,
+          values: [],
+        },
+        minRowHeight: 50,
+        areaHeight: 120,
+        additionalAreaHeight: 0,
+        scrollPosition: 0,
+        expected: {
+          headRowsCount: 0,
+          dataHeadColumnsCount: 0,
+          offset: 0,
+          startRowIndex: 0,
+          headerRows: [],
+          values: [],
+        },
+      },
+      {
         name: 'simple',
         data,
         minRowHeight: 50,
@@ -153,7 +169,7 @@ const allTests: TTests = [
           offset: 0,
           startRowIndex: 1,
           headerRows: data.values.slice(0, 1),
-          values: data.values.slice(1, 4),
+          values: data.values.slice(1, 5),
         },
       },
       {
@@ -169,7 +185,7 @@ const allTests: TTests = [
           offset: 100,
           startRowIndex: 3,
           headerRows: data.values.slice(0, 1),
-          values: data.values.slice(3, 6),
+          values: data.values.slice(3, 7),
         },
       },
     ],

@@ -1,12 +1,22 @@
-table {
+.container {
   overflow: auto;
-  border-collapse: separate;
+}
+
+.table {
   border-spacing: 0;
   border-left: 1px solid red;
   border-top: 1px solid red;
 }
 
-td {
+.stickyHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-bottom: -1px;
+}
+
+.cell {
+  width: 150px;
   border: 1px solid red;
   border-left: none;
   border-top: none;
@@ -16,4 +26,11 @@ td {
   background: #ffffff;
   padding: 0;
   box-sizing: border-box;
+}
+
+.cellContent {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

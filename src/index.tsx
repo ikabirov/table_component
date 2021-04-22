@@ -1,19 +1,21 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { Table } from './renderer'
+import { Table, disposeTable } from './renderer'
 import { TTableData } from './types'
 
 type TProps = {
   table: TTableData
-  seed: number
+  className: string
 }
 
-const ReactTable: FC<TProps> = ({ table, seed }) => {
-  console.log('ReactTable')
-  const ref = useRef<any>()
+const ReactTable: FC<TProps> = ({ table, className }) => {
+  const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    Table({ table, target: ref.current })
-  }, [table, seed])
+    const target = ref.current!
+    Table({ table, target, className })
+
+    return () => disposeTable(target)
+  }, [table, className])
 
   return <div ref={ref} />
 }

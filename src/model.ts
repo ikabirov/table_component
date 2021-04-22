@@ -7,6 +7,8 @@ export type TVisibleTableData = TTableData & {
 }
 
 class TableModel {
+  private containerElement: HTMLElement | null = null
+  private resizeObserver: ResizeObserver
   private data: TTableData
   private rowHeights: number[]
   private areaHeight: number = 0
@@ -36,10 +38,28 @@ class TableModel {
     this.data = data
     this.rowHeights = new Array(data.values.length).fill(minRowHeight)
     this.onChange = onChange
+
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.containerElement) {
+        this.setAreaHeight(
+          this.containerElement.clientHeight,
+          this.containerElement.clientHeight * 0.5
+        )
+      }
+    })
   }
 
   private getRowInfo(index: number) {
-    const span = this.data.values[index][0].span || 1
+    const firstCell = this.data.values[index]?.[0]
+
+    if (!firstCell) {
+      return {
+        span: 0,
+        height: 0,
+      }
+    }
+
+    const span = firstCell.span || 1
     const height = this.rowHeights.slice(index, index + span).reduce((acc, value) => acc + value, 0)
 
     return {
@@ -67,10 +87,13 @@ class TableModel {
       rowInfo = this.getRowInfo(start)
     }
 
-    let end = start + 1
-    while (height + offset + this.rowHeights[end] < bottom) {
-      height += this.rowHeights[end]
-      ++end
+    let end = start
+    rowInfo = this.getRowInfo(end)
+
+    while (height + offset < bottom && end < this.data.values.length) {
+      height += rowInfo.height
+      end += rowInfo.span
+      rowInfo = this.getRowInfo(end)
     }
 
     if (
@@ -85,9 +108,23 @@ class TableModel {
         values: this.data.values.slice(start, end),
         headerRows: this.data.values.slice(0, this.data.headRowsCount),
       }
-
       this.onChange()
     }
+  }
+
+  public setContainerElement = (value: HTMLElement) => {
+    if (this.containerElement !== value) {
+      if (this.containerElement) {
+        this.resizeObserver.unobserve(value)
+      }
+
+      this.containerElement = value
+      this.resizeObserver.observe(value)
+    }
+  }
+
+  public containSameData(data: TTableData) {
+    return this.data === data
   }
 
   public setScrollPosition = (value: number) => {
@@ -106,6 +143,10 @@ class TableModel {
 
   public setRowHeights(start: number, values: number[]) {
     this.rowHeights.splice(start, values.length, ...values)
+  }
+
+  public dispose() {
+    this.resizeObserver.disconnect()
   }
 }
 

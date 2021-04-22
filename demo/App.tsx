@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { ReactTable } from '../src'
 import { TTableData } from '../src/types'
+import styles from './styles.module.css'
 
 function App() {
   const [_, redraw] = useState(0)
-  const [data, setData] = useState<TTableData | null>(null)
+  const [show, setShow] = useState(true)
+  const [data, setData] = useState<TTableData>({
+    dataHeadColumnsCount: 0,
+    headRowsCount: 0,
+    values: [],
+  })
 
   useEffect(() => {
     const name = location.hash === '#invert' ? 'big_invert.json' : 'big.json'
@@ -15,10 +21,9 @@ function App() {
       .then(setData)
   }, [])
 
-  if (!data) return <div>loading...</div>
-
   return (
-    <div className={styles.app}>
+    <div>
+      <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'} table</button>
       <button onClick={() => setData({ ...data })}>new data</button>
       <button
         onClick={() => {
@@ -27,7 +32,7 @@ function App() {
       >
         redraw
       </button>
-      <ReactTable table={data} seed={Math.random()} />
+      {show && <ReactTable table={data} className={styles.table} />}
     </div>
   )
 }
