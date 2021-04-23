@@ -17,8 +17,13 @@ export declare type TTableData = {
 	dataHeadColumnsCount: number;
 };
 export declare type TProps = {
-	table: TTableData;
 	className?: string;
+	table: TTableData;
+	minCellHeight?: number;
+	cellClasses?: {
+		header?: string;
+		body?: string;
+	};
 };
 export declare const ReactTable: React.FC<TProps>;
 
