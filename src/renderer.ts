@@ -1,9 +1,12 @@
 import { html, render, Renderable } from 'uhtml'
-import { TableModel, TVisibleTableData } from './model'
+import { TableModel } from './model'
 import { TCellData, TTableData } from './types'
 import styles from './style.module.css'
 
 type TRenderMeta = { [row: number]: { [column: number]: boolean } }
+type TCellClasses = {
+  [key: string]: string
+}
 
 const CELL_WIDTH = 150
 
@@ -22,10 +25,7 @@ function Cell({
   isRowHeader: boolean
   isColumnHeader: boolean
   meta: TRenderMeta
-  cellClasses: {
-    header?: string
-    body?: string
-  }
+  cellClasses: TCellClasses
 }) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
@@ -54,8 +54,17 @@ function Cell({
   const style = `position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
     columnIndex * CELL_WIDTH
   }px;`
-  const cellClassName =
-    (isRowHeader || isColumnHeader ? cellClasses.header : cellClasses.body) || ''
+
+  const styleNames = [isRowHeader || isColumnHeader ? 'header' : 'body']
+
+  if (cell.styles) {
+    styleNames.push(...cell.styles)
+  }
+
+  const cellClassName = styleNames
+    .map((style) => cellClasses[style])
+    .filter((className) => className != null)
+    .join(' ')
 
   return html`<td
     class=${`${styles.cell} ${cellClassName}`}
@@ -84,10 +93,7 @@ function Row({
   isRowHeader: boolean
   dataHeadColumnsCount: number
   meta: TRenderMeta
-  cellClasses: {
-    header?: string
-    body?: string
-  }
+  cellClasses: TCellClasses
 }) {
   return html.for(key, rowIndex.toString())`<tr
     data-rowIndex=${rowIndex}
@@ -110,10 +116,7 @@ function TableRenderer(
   key: object,
   start: number,
   { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
-  cellClasses: {
-    header?: string
-    body?: string
-  }
+  cellClasses: TCellClasses
 ) {
   const meta: TRenderMeta = {}
 

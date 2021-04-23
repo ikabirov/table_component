@@ -7,8 +7,7 @@ type TProps = {
   table: TTableData
   minCellHeight?: number
   cellClasses?: {
-    header?: string
-    body?: string
+    [key: string]: string
   }
 }
 

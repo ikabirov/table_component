@@ -21,8 +21,7 @@ export declare type TProps = {
 	table: TTableData;
 	minCellHeight?: number;
 	cellClasses?: {
-		header?: string;
-		body?: string;
+		[key: string]: string;
 	};
 };
 export declare const ReactTable: React.FC<TProps>;
