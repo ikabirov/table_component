@@ -159,8 +159,13 @@ function TableContainer({
     <div
       class=${`${className} ${styles.container}`}
       ref=${setContainerElement}
-      onscroll=${(e: any) => {
-        onScroll(e.target.scrollTop)
+      onscroll=${(e: MouseEvent) => {
+        onScroll((e.target as HTMLDivElement).scrollTop)
+      }}
+      onwheel=${(e: WheelEvent) => {
+        if (!e.ctrlKey) {
+          e.stopPropagation()
+        }
       }}
     >
       <div style=${`height: ${height}px;`}>
