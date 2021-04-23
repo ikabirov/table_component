@@ -1,12 +1,12 @@
 {
   "name": "table-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "files": [
     "dist"
   ],
   "main": "./dist/table-component.umd.js",
   "module": "./dist/table-component.es.js",
-  "types": "./src/index.tsx",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/table-component.es.js",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build && yarn dts-bundle-generator -o dist/index.d.ts src/index.tsx",
     "serve": "vite preview"
   },
   "dependencies": {},
@@ -25,6 +25,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react-refresh": "^1.3.1",
+    "dts-bundle-generator": "^5.9.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "react": "^17.0.0",

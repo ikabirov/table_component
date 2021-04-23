@@ -110,15 +110,23 @@ function TableRenderer(
   `
 }
 
-function TableContainer(
-  content: Renderable,
-  headers: Renderable | null,
-  height: number,
-  offset: number,
-  onScroll: (value: number) => void,
-  setContainerElement: (value: HTMLElement) => void,
-  className: string
-) {
+function TableContainer({
+  content,
+  headers,
+  height,
+  offset,
+  onScroll,
+  setContainerElement,
+  className = '',
+}: {
+  content: Renderable
+  headers: Renderable | null
+  height: number
+  offset: number
+  onScroll: (value: number) => void
+  setContainerElement: (value: HTMLElement) => void
+  className?: string
+}) {
   return html`
     <div
       class=${`${className} ${styles.container}`}
@@ -169,7 +177,7 @@ function Table({
 }: {
   table: TTableData
   target: HTMLElement
-  className: string
+  className?: string
 }) {
   const model = getTableModel({ table, target, redraw })
 
@@ -186,15 +194,15 @@ function Table({
 
     render(
       target,
-      TableContainer(
+      TableContainer({
         content,
         headers,
-        model.contentHeight,
-        data.offset,
-        model.setScrollPosition,
-        model.setContainerElement,
-        className
-      )
+        height: model.contentHeight,
+        offset: data.offset,
+        onScroll: model.setScrollPosition,
+        setContainerElement: model.setContainerElement,
+        className,
+      })
     )
 
     const [headerTable, contentTable] = target.querySelectorAll('table')

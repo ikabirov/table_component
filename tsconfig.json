@@ -16,6 +16,7 @@
     "jsx": "react",
     "outDir": "dist",
     "noUncheckedIndexedAccess": true,
+    "declaration": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["demo", "src"]
