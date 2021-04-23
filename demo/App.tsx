@@ -32,7 +32,16 @@ function App() {
       >
         redraw
       </button>
-      {show && <ReactTable table={data} className={styles.table} />}
+      {show && (
+        <ReactTable
+          table={data}
+          className={styles.table}
+          cellClasses={{
+            body: styles.body,
+            header: styles.header,
+          }}
+        />
+      )}
     </div>
   )
 }

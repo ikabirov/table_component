@@ -1,11 +1,12 @@
 .container {
   overflow: auto;
+  --border-color: rgb(240, 240, 240);
 }
 
 .table {
   border-spacing: 0;
-  border-left: 1px solid red;
-  border-top: 1px solid red;
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
 }
 
 .stickyHeader {
@@ -17,15 +18,22 @@
 
 .cell {
   width: 150px;
-  border: 1px solid red;
+  border: 1px solid var(--border-color);
   border-left: none;
   border-top: none;
   word-break: break-word;
   min-width: 150px;
   overflow: hidden;
-  background: #ffffff;
   padding: 0;
   box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.cellContainer {
+  display: flex;
+  justify-content: inherit;
+  align-items: center;
+  min-height: var(--table-min-cell-height);
 }
 
 .cellContent {

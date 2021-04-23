@@ -3,16 +3,21 @@ import { Table, disposeTable } from './renderer'
 import { TTableData } from './types'
 
 type TProps = {
-  table: TTableData
   className?: string
+  table: TTableData
+  minCellHeight?: number
+  cellClasses?: {
+    header?: string
+    body?: string
+  }
 }
 
-const ReactTable: React.FC<TProps> = ({ table, className }) => {
+const ReactTable: React.FC<TProps> = ({ table, className, minCellHeight, cellClasses }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const target = ref.current!
-    Table({ table, target, className })
+    Table({ table, target, className, minCellHeight, cellClasses })
 
     return () => disposeTable(target)
   }, [table, className])

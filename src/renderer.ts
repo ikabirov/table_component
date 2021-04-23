@@ -14,6 +14,7 @@ function Cell({
   isRowHeader,
   isColumnHeader,
   meta,
+  cellClasses,
 }: {
   cell: TCellData
   rowIndex: number
@@ -21,6 +22,10 @@ function Cell({
   isRowHeader: boolean
   isColumnHeader: boolean
   meta: TRenderMeta
+  cellClasses: {
+    header?: string
+    body?: string
+  }
 }) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
@@ -48,10 +53,19 @@ function Cell({
 
   const style = `position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
     columnIndex * CELL_WIDTH
-  }px; background: ${isRowHeader || isColumnHeader ? '#efefef' : '#fff'}`
+  }px;`
+  const cellClassName =
+    (isRowHeader || isColumnHeader ? cellClasses.header : cellClasses.body) || ''
 
-  return html`<td class=${styles.cell} colspan=${colSpan} rowspan=${rowSpan} style=${style}>
-    <div class=${styles.cellContent}>${cell.value}</div>
+  return html`<td
+    class=${`${styles.cell} ${cellClassName}`}
+    colspan=${colSpan}
+    rowspan=${rowSpan}
+    style=${style}
+  >
+    <div class=${styles.cellContainer}>
+      <div class=${styles.cellContent}>${cell.value}</div>
+    </div>
   </td>`
 }
 
@@ -62,6 +76,7 @@ function Row({
   isRowHeader,
   dataHeadColumnsCount,
   meta,
+  cellClasses,
 }: {
   key: object
   row: TCellData[]
@@ -69,6 +84,10 @@ function Row({
   isRowHeader: boolean
   dataHeadColumnsCount: number
   meta: TRenderMeta
+  cellClasses: {
+    header?: string
+    body?: string
+  }
 }) {
   return html.for(key, rowIndex.toString())`<tr
     data-rowIndex=${rowIndex}
@@ -81,6 +100,7 @@ function Row({
         isRowHeader,
         isColumnHeader: dataHeadColumnsCount > columnIndex,
         meta,
+        cellClasses,
       })
     )}
   </tr>`
@@ -89,7 +109,11 @@ function Row({
 function TableRenderer(
   key: object,
   start: number,
-  { values: table, headRowsCount, dataHeadColumnsCount }: TTableData
+  { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
+  cellClasses: {
+    header?: string
+    body?: string
+  }
 ) {
   const meta: TRenderMeta = {}
 
@@ -104,6 +128,7 @@ function TableRenderer(
           isRowHeader: headRowsCount > rowIndex,
           dataHeadColumnsCount,
           meta,
+          cellClasses,
         })
       })}
     </table>
@@ -149,10 +174,12 @@ function getTableModel({
   table,
   target,
   redraw,
+  minCellHeight,
 }: {
   table: TTableData
   target: HTMLElement
   redraw: () => void
+  minCellHeight: number
 }) {
   let oldModel = modelsMap.get(target)
 
@@ -164,33 +191,45 @@ function getTableModel({
     oldModel.dispose()
   }
 
-  const model = new TableModel(table, redraw, 40)
+  const model = new TableModel(table, redraw, minCellHeight)
   modelsMap.set(target, model)
 
   return model
 }
 
 function Table({
+  className,
   table,
   target,
-  className,
+  minCellHeight = 30,
+  cellClasses = {},
 }: {
+  className?: string
   table: TTableData
   target: HTMLElement
-  className?: string
+  minCellHeight?: number
+  cellClasses?: {
+    header?: string
+    body?: string
+  }
 }) {
-  const model = getTableModel({ table, target, redraw })
+  const model = getTableModel({ table, target, redraw, minCellHeight })
+  target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
 
   function redraw() {
     const data = model.visibleTableData
-    console.log(data)
 
-    const headers = TableRenderer(model, 0, {
-      dataHeadColumnsCount: data.dataHeadColumnsCount,
-      headRowsCount: data.headerRows.length,
-      values: data.headerRows,
-    })
-    const content = TableRenderer(target, data.startRowIndex, data)
+    const headers = TableRenderer(
+      model,
+      0,
+      {
+        dataHeadColumnsCount: data.dataHeadColumnsCount,
+        headRowsCount: data.headerRows.length,
+        values: data.headerRows,
+      },
+      cellClasses
+    )
+    const content = TableRenderer(target, data.startRowIndex, data, cellClasses)
 
     render(
       target,
