@@ -24,7 +24,6 @@
   word-break: break-word;
   min-width: 150px;
   overflow: hidden;
-  padding: 0;
   box-sizing: border-box;
   vertical-align: middle;
 }
