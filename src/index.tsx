@@ -9,14 +9,28 @@ type TProps = {
   cellClasses?: {
     [key: string]: string
   }
+  onCellClick?: ({}: { row: number; column: number }) => void
 }
 
-const ReactTable: React.FC<TProps> = ({ table, className, minCellHeight, cellClasses }) => {
+const ReactTable: React.FC<TProps> = ({
+  table,
+  className,
+  minCellHeight,
+  cellClasses,
+  onCellClick,
+}) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const target = ref.current!
-    Table({ table, target, className, minCellHeight, cellClasses })
+    Table({
+      table,
+      target,
+      className,
+      minCellHeight,
+      cellClasses,
+      onCellClick,
+    })
 
     return () => disposeTable(target)
   }, [table, className])

@@ -23,6 +23,10 @@ export declare type TProps = {
 	cellClasses?: {
 		[key: string]: string;
 	};
+	onCellClick?: ({}: {
+		row: number;
+		column: number;
+	}) => void;
 };
 export declare const ReactTable: React.FC<TProps>;
 

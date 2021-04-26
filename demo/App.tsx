@@ -14,8 +14,8 @@ function App() {
 
   useEffect(() => {
     // const name = location.hash === '#invert' ? 'big_invert.json' : 'big.json'
-    // const name = 'big.json'
-    const name = 'data.json'
+    const name = 'big.json'
+    // const name = 'data.json'
     fetch(`./demo/${name}`)
       .then((response) => response.json())
       .then(setData)
@@ -41,6 +41,7 @@ function App() {
             header: styles.header,
             total: styles.total,
           }}
+          onCellClick={(data) => console.log(data)}
         />
       )}
     </div>

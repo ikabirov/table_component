@@ -71,6 +71,7 @@ function Cell({
     colspan=${colSpan}
     rowspan=${rowSpan}
     style=${style}
+    .dataset=${{ column: columnIndex, row: rowIndex }}
   >
     <div class=${styles.cellContainer}>
       <div class=${styles.cellContent}>${cell.value}</div>
@@ -116,12 +117,33 @@ function TableRenderer(
   key: object,
   start: number,
   { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
-  cellClasses: TCellClasses
+  cellClasses: TCellClasses,
+  onCellClick?: ({}: { row: number; column: number }) => void
 ) {
   const meta: TRenderMeta = {}
 
   return html`
-    <table class=${styles.table}>
+    <table
+      class=${styles.table}
+      onclick=${onCellClick
+        ? (e: MouseEvent) => {
+            let target = e.target as HTMLElement | null
+
+            while (target && target.tagName !== 'TD' && target !== e.currentTarget) {
+              target = target.parentElement
+            }
+
+            const { column: columnString, row: rowString } = target?.dataset || {}
+
+            if (columnString && rowString) {
+              const column = parseInt(columnString, 10)
+              const row = parseInt(rowString, 10)
+
+              onCellClick({ row, column })
+            }
+          }
+        : null}
+    >
       ${table.map((row, index) => {
         const rowIndex = start + index
         return Row({
@@ -211,15 +233,17 @@ function Table({
   target,
   minCellHeight = 30,
   cellClasses = {},
+  onCellClick,
 }: {
   className?: string
-  table: TTableData
-  target: HTMLElement
-  minCellHeight?: number
   cellClasses?: {
     header?: string
     body?: string
   }
+  table: TTableData
+  target: HTMLElement
+  minCellHeight?: number
+  onCellClick?: ({}: { row: number; column: number }) => void
 }) {
   const model = getTableModel({ table, target, redraw, minCellHeight })
   target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
@@ -235,9 +259,10 @@ function Table({
         headRowsCount: data.headerRows.length,
         values: data.headerRows,
       },
-      cellClasses
+      cellClasses,
+      onCellClick
     )
-    const content = TableRenderer(target, data.startRowIndex, data, cellClasses)
+    const content = TableRenderer(target, data.startRowIndex, data, cellClasses, onCellClick)
 
     render(
       target,
