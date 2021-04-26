@@ -42,6 +42,8 @@ function App() {
             total: styles.total,
           }}
           onCellClick={(data) => console.log(data)}
+          stickyHeader={true}
+          stickySide={true}
         />
       )}
     </div>

@@ -18,6 +18,7 @@ function Cell({
   isColumnHeader,
   meta,
   cellClasses,
+  stickySide,
 }: {
   cell: TCellData
   rowIndex: number
@@ -26,6 +27,7 @@ function Cell({
   isColumnHeader: boolean
   meta: TRenderMeta
   cellClasses: TCellClasses
+  stickySide: boolean
 }) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
@@ -51,9 +53,13 @@ function Cell({
     }
   }
 
-  const style = `position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
-    columnIndex * CELL_WIDTH
-  }px;`
+  let style = ''
+
+  if (stickySide) {
+    style = `position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
+      columnIndex * CELL_WIDTH
+    }px;`
+  }
 
   const styleNames = [isRowHeader || isColumnHeader ? 'header' : 'body']
 
@@ -87,6 +93,7 @@ function Row({
   dataHeadColumnsCount,
   meta,
   cellClasses,
+  stickySide,
 }: {
   key: object
   row: TCellData[]
@@ -95,6 +102,7 @@ function Row({
   dataHeadColumnsCount: number
   meta: TRenderMeta
   cellClasses: TCellClasses
+  stickySide: boolean
 }) {
   return html.for(key, rowIndex.toString())`<tr
     data-rowIndex=${rowIndex}
@@ -108,6 +116,7 @@ function Row({
         isColumnHeader: dataHeadColumnsCount > columnIndex,
         meta,
         cellClasses,
+        stickySide,
       })
     )}
   </tr>`
@@ -118,6 +127,7 @@ function TableRenderer(
   start: number,
   { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
   cellClasses: TCellClasses,
+  stickySide: boolean,
   onCellClick?: ({}: { row: number; column: number }) => void
 ) {
   const meta: TRenderMeta = {}
@@ -154,6 +164,7 @@ function TableRenderer(
           dataHeadColumnsCount,
           meta,
           cellClasses,
+          stickySide,
         })
       })}
     </table>
@@ -205,11 +216,13 @@ function getTableModel({
   target,
   redraw,
   minCellHeight,
+  stickyHeader,
 }: {
   table: TTableData
   target: HTMLElement
   redraw: () => void
   minCellHeight: number
+  stickyHeader: boolean
 }) {
   let oldModel = modelsMap.get(target)
 
@@ -221,7 +234,7 @@ function getTableModel({
     oldModel.dispose()
   }
 
-  const model = new TableModel(table, redraw, minCellHeight)
+  const model = new TableModel(table, redraw, minCellHeight, stickyHeader)
   modelsMap.set(target, model)
 
   return model
@@ -234,6 +247,8 @@ function Table({
   minCellHeight = 30,
   cellClasses = {},
   onCellClick,
+  stickyHeader,
+  stickySide,
 }: {
   className?: string
   cellClasses?: {
@@ -243,26 +258,44 @@ function Table({
   table: TTableData
   target: HTMLElement
   minCellHeight?: number
+  stickyHeader: boolean
+  stickySide: boolean
   onCellClick?: ({}: { row: number; column: number }) => void
 }) {
-  const model = getTableModel({ table, target, redraw, minCellHeight })
+  const model = getTableModel({
+    table,
+    target,
+    redraw,
+    minCellHeight,
+    stickyHeader,
+  })
   target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
 
   function redraw() {
     const data = model.visibleTableData
 
-    const headers = TableRenderer(
-      model,
-      0,
-      {
-        dataHeadColumnsCount: data.dataHeadColumnsCount,
-        headRowsCount: data.headerRows.length,
-        values: data.headerRows,
-      },
+    const headers = data.headerRows
+      ? TableRenderer(
+          model,
+          0,
+          {
+            dataHeadColumnsCount: data.dataHeadColumnsCount,
+            headRowsCount: data.headerRows.length,
+            values: data.headerRows,
+          },
+          cellClasses,
+          stickySide,
+          onCellClick
+        )
+      : null
+    const content = TableRenderer(
+      target,
+      data.startRowIndex,
+      data,
       cellClasses,
+      stickySide,
       onCellClick
     )
-    const content = TableRenderer(target, data.startRowIndex, data, cellClasses, onCellClick)
 
     render(
       target,
@@ -277,11 +310,15 @@ function Table({
       })
     )
 
-    const [headerTable, contentTable] = target.querySelectorAll('table')
+    const tables = target.querySelectorAll('table')
+    const headerTable = headers ? tables[0] : null
+    const contentTable = headers ? tables[1] : tables[0]
 
-    function updateHeights(index: number, table?: HTMLTableElement) {
-      const rowHeights = [...(table?.children || [])].map((row) => row.clientHeight)
-      model.setRowHeights(index, rowHeights)
+    function updateHeights(index: number, table?: HTMLTableElement | null) {
+      if (table) {
+        const rowHeights = [...(table.children || [])].map((row) => row.clientHeight)
+        model.setRowHeights(index, rowHeights)
+      }
     }
 
     updateHeights(0, headerTable)

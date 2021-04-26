@@ -3,13 +3,14 @@ import { TTableData } from './types'
 export type TVisibleTableData = TTableData & {
   offset: number
   startRowIndex: number
-  headerRows: TTableData['values']
+  headerRows: TTableData['values'] | null
 }
 
 class TableModel {
   private containerElement: HTMLElement | null = null
   private resizeObserver: ResizeObserver
   private data: TTableData
+  private stickyHeader: boolean
   private rowHeights: number[]
   private areaHeight: number = 0
   private additionalArea: number = 0
@@ -34,10 +35,16 @@ class TableModel {
     return this.lastDataSnapshot
   }
 
-  constructor(data: TTableData, onChange: () => void, minRowHeight: number) {
+  constructor(
+    data: TTableData,
+    onChange: () => void,
+    minRowHeight: number,
+    stickyHeader: boolean = true
+  ) {
     this.data = data
     this.rowHeights = new Array(data.values.length).fill(minRowHeight)
     this.onChange = onChange
+    this.stickyHeader = stickyHeader
 
     this.resizeObserver = new ResizeObserver(() => {
       if (this.containerElement) {
@@ -70,12 +77,15 @@ class TableModel {
 
   private commit() {
     let offset = 0
-    let start = this.data.headRowsCount
+    let start = 0
+    let visibleHeight = this.areaHeight
     let height = 0
 
-    const visibleHeight =
-      this.areaHeight -
-      this.rowHeights.slice(0, this.data.headRowsCount).reduce((acc, value) => acc + value, 0)
+    if (this.stickyHeader) {
+      start = this.data.headRowsCount
+      visibleHeight -= this.rowHeights.slice(0, start).reduce((acc, value) => acc + value, 0)
+    }
+
     const top = Math.max(0, this.scrollPosition - this.additionalArea)
     const bottom = this.scrollPosition + visibleHeight + this.additionalArea
 
@@ -104,9 +114,9 @@ class TableModel {
         startRowIndex: start,
         offset,
         dataHeadColumnsCount: this.data.dataHeadColumnsCount,
-        headRowsCount: 0,
+        headRowsCount: this.stickyHeader ? 0 : this.data.headRowsCount,
         values: this.data.values.slice(start, end),
-        headerRows: this.data.values.slice(0, this.data.headRowsCount),
+        headerRows: this.stickyHeader ? this.data.values.slice(0, this.data.headRowsCount) : null,
       }
       this.onChange()
     }
