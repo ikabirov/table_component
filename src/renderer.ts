@@ -10,6 +10,10 @@ type TCellClasses = {
 
 const CELL_WIDTH = 150
 
+function Link(value: string | number) {
+  return html`<a target="blank" href="${value}">${value}</a>`
+}
+
 function Cell({
   cell,
   rowIndex,
@@ -82,7 +86,7 @@ function Cell({
     .dataset=${{ column: columnIndex, row: rowIndex }}
   >
     <div class=${styles.cellContainer}>
-      <div class=${styles.cellContent}>${cell.value}</div>
+      <div class=${styles.cellContent}>${cell.isLink ? Link(cell.value) : cell.value}</div>
     </div>
   </td>`
 }
