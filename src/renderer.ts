@@ -19,6 +19,7 @@ function Cell({
   meta,
   cellClasses,
   stickySide,
+  mergeCells,
 }: {
   cell: TCellData
   rowIndex: number
@@ -28,13 +29,14 @@ function Cell({
   meta: TRenderMeta
   cellClasses: TCellClasses
   stickySide: boolean
+  mergeCells: boolean
 }) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
   }
 
-  const colSpan = isRowHeader ? cell?.span : undefined
-  const rowSpan = isColumnHeader ? cell?.span : undefined
+  const colSpan = isRowHeader && mergeCells ? cell?.span : undefined
+  const rowSpan = isColumnHeader && mergeCells ? cell?.span : undefined
 
   if (colSpan) {
     for (let i = 1; i < colSpan; ++i) {
@@ -94,6 +96,7 @@ function Row({
   meta,
   cellClasses,
   stickySide,
+  mergeCells,
 }: {
   key: object
   row: TCellData[]
@@ -103,6 +106,7 @@ function Row({
   meta: TRenderMeta
   cellClasses: TCellClasses
   stickySide: boolean
+  mergeCells: boolean
 }) {
   return html.for(key, rowIndex.toString())`<tr
     data-rowIndex=${rowIndex}
@@ -117,6 +121,7 @@ function Row({
         meta,
         cellClasses,
         stickySide,
+        mergeCells,
       })
     )}
   </tr>`
@@ -128,6 +133,7 @@ function TableRenderer(
   { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
   cellClasses: TCellClasses,
   stickySide: boolean,
+  mergeCells: boolean,
   onCellClick?: ({}: { row: number; column: number }) => void
 ) {
   const meta: TRenderMeta = {}
@@ -165,6 +171,7 @@ function TableRenderer(
           meta,
           cellClasses,
           stickySide,
+          mergeCells,
         })
       })}
     </table>
@@ -217,12 +224,14 @@ function getTableModel({
   redraw,
   minCellHeight,
   stickyHeader,
+  mergeCells,
 }: {
   table: TTableData
   target: HTMLElement
   redraw: () => void
   minCellHeight: number
   stickyHeader: boolean
+  mergeCells: boolean
 }) {
   let oldModel = modelsMap.get(target)
 
@@ -234,7 +243,13 @@ function getTableModel({
     oldModel.dispose()
   }
 
-  const model = new TableModel(table, redraw, minCellHeight, stickyHeader)
+  const model = new TableModel({
+    data: table,
+    onChange: redraw,
+    minRowHeight: minCellHeight,
+    stickyHeader,
+    mergeCells,
+  })
   modelsMap.set(target, model)
 
   return model
@@ -249,6 +264,7 @@ function Table({
   onCellClick,
   stickyHeader,
   stickySide,
+  mergeCells,
 }: {
   className?: string
   cellClasses?: {
@@ -258,6 +274,7 @@ function Table({
   table: TTableData
   target: HTMLElement
   minCellHeight?: number
+  mergeCells: boolean
   stickyHeader: boolean
   stickySide: boolean
   onCellClick?: ({}: { row: number; column: number }) => void
@@ -268,6 +285,7 @@ function Table({
     redraw,
     minCellHeight,
     stickyHeader,
+    mergeCells,
   })
   target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
 
@@ -285,6 +303,7 @@ function Table({
           },
           cellClasses,
           stickySide,
+          mergeCells,
           onCellClick
         )
       : null
@@ -294,6 +313,7 @@ function Table({
       data,
       cellClasses,
       stickySide,
+      mergeCells,
       onCellClick
     )
 

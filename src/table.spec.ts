@@ -9,6 +9,7 @@ type TFixture = {
   additionalAreaHeight: number
   scrollPosition: number
   stickyHeader?: boolean
+  mergeCells?: boolean
   expected: TVisibleTableData
 }
 
@@ -213,18 +214,42 @@ const allTests: TTests = [
       },
     ],
   },
+  {
+    name: 'without merge cells',
+    fixtures: [
+      {
+        name: 'without sticky headers',
+        data,
+        minRowHeight: 50,
+        areaHeight: 120,
+        additionalAreaHeight: 0,
+        scrollPosition: 60,
+        stickyHeader: false,
+        mergeCells: false,
+        expected: {
+          headRowsCount: 1,
+          dataHeadColumnsCount: 2,
+          offset: 50,
+          startRowIndex: 1,
+          headerRows: null,
+          values: data.values.slice(1, 4),
+        },
+      },
+    ],
+  },
 ]
 
 function runUseCase(useCase: TUseCase) {
   describe(useCase.name, () => {
     useCase.fixtures?.forEach((fixture, index) => {
       it(fixture.name || `test #${index + 1}`, () => {
-        const model = new TableModel(
-          fixture.data,
-          () => {},
-          fixture.minRowHeight,
-          fixture.stickyHeader
-        )
+        const model = new TableModel({
+          data: fixture.data,
+          onChange: () => {},
+          minRowHeight: fixture.minRowHeight,
+          stickyHeader: fixture.stickyHeader !== false,
+          mergeCells: fixture.mergeCells !== false,
+        })
 
         model.setAreaHeight(fixture.areaHeight, fixture.additionalAreaHeight)
         model.setScrollPosition(fixture.scrollPosition)

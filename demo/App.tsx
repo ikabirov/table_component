@@ -44,6 +44,7 @@ function App() {
           onCellClick={(data) => console.log(data)}
           stickyHeader={true}
           stickySide={true}
+          mergeCells={true}
         />
       )}
     </div>

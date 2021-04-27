@@ -20,6 +20,7 @@ export declare type TProps = {
 	className?: string;
 	table: TTableData;
 	minCellHeight?: number;
+	mergeCells?: boolean;
 	stickyHeader?: boolean;
 	stickySide?: boolean;
 	cellClasses?: {

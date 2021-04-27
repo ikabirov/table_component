@@ -6,6 +6,7 @@ type TProps = {
   className?: string
   table: TTableData
   minCellHeight?: number
+  mergeCells?: boolean
   stickyHeader?: boolean
   stickySide?: boolean
   cellClasses?: {
@@ -19,6 +20,7 @@ const ReactTable: React.FC<TProps> = ({
   className,
   minCellHeight,
   cellClasses,
+  mergeCells = true,
   stickyHeader = true,
   stickySide = true,
   onCellClick,
@@ -33,6 +35,7 @@ const ReactTable: React.FC<TProps> = ({
       className,
       minCellHeight,
       cellClasses,
+      mergeCells,
       stickyHeader,
       stickySide,
       onCellClick,

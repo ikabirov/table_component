@@ -11,6 +11,7 @@ class TableModel {
   private resizeObserver: ResizeObserver
   private data: TTableData
   private stickyHeader: boolean
+  private mergeCells: boolean
   private rowHeights: number[]
   private areaHeight: number = 0
   private additionalArea: number = 0
@@ -35,16 +36,24 @@ class TableModel {
     return this.lastDataSnapshot
   }
 
-  constructor(
-    data: TTableData,
-    onChange: () => void,
-    minRowHeight: number,
-    stickyHeader: boolean = true
-  ) {
+  constructor({
+    data,
+    onChange,
+    minRowHeight,
+    stickyHeader,
+    mergeCells,
+  }: {
+    data: TTableData
+    onChange: () => void
+    minRowHeight: number
+    stickyHeader: boolean
+    mergeCells: boolean
+  }) {
     this.data = data
     this.rowHeights = new Array(data.values.length).fill(minRowHeight)
     this.onChange = onChange
     this.stickyHeader = stickyHeader
+    this.mergeCells = mergeCells
 
     this.resizeObserver = new ResizeObserver(() => {
       if (this.containerElement) {
@@ -56,7 +65,14 @@ class TableModel {
     })
   }
 
-  private getRowInfo(index: number) {
+  private getRowInfo(index: number): { span: number; height: number } {
+    if (!this.mergeCells) {
+      return {
+        span: 1,
+        height: this.rowHeights[index]!,
+      }
+    }
+
     const firstCell = this.data.values[index]?.[0]
 
     if (!firstCell) {
