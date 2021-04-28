@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Table, disposeTable } from './renderer'
+import { Table, disposeTable } from './renderers/table'
 import { TTableData } from './types'
 
 type TProps = {
