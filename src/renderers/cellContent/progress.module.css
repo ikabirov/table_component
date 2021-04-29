@@ -1,0 +1,21 @@
+.container {
+  height: 30px;
+  flex-grow: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  border: 1px solid #efefef;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  position: absolute;
+  background: antiquewhite;
+  height: 100%;
+  left: 0;
+}
+
+.label {
+  position: relative;
+}

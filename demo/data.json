@@ -13,7 +13,7 @@
       {
         "span": 2,
         "value": "Адмиралтейский",
-        "isLink": false
+        "type": "link"
       },
       {
         "span": 2,
@@ -91,7 +91,8 @@
         "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-zbzTogys0"
       },
       {
-        "value": "3 907.90",
+        "value": 0.25,
+        "type": "progress",
         "id": "field-hkCAYUdd6:0,field-2b5AOLQJY:0,field-VQgqHl-Gk:0,field-Cp1ogUDQT:0;field-k1kIzDI-r"
       },
       {

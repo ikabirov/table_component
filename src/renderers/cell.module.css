@@ -16,10 +16,3 @@
   align-items: center;
   min-height: var(--table-min-cell-height);
 }
-
-.cellContent {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}

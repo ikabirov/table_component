@@ -1,7 +1,9 @@
+export type TCellType = 'text' | 'link' | 'progress'
+
 export type TCellData = {
   span?: number
   id?: string
-  isLink?: boolean
+  type?: TCellType
   styles?: string[]
   value: string | number
 }

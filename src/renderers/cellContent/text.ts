@@ -1,7 +1,9 @@
 import { html } from 'uhtml'
 
-function TableCellLink(value: string | number) {
-  return html`<a target="blank" href="${value}">${value}</a>`
+import styles from './text.module.css'
+
+function TableCellText(value: string | number) {
+  return html`<div class=${styles.text}>${value}</div>`
 }
 
-export { TableCellLink }
+export { TableCellText }
