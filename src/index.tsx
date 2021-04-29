@@ -32,7 +32,6 @@ const ReactTable: React.FC<TProps> = ({
     Table({
       table,
       target,
-      className,
       minCellHeight,
       cellClasses,
       mergeCells,
@@ -44,7 +43,7 @@ const ReactTable: React.FC<TProps> = ({
     return () => disposeTable(target)
   }, [table, className])
 
-  return <div ref={ref} />
+  return <div ref={ref} className={className} />
 }
 
 export { ReactTable }

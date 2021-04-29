@@ -70,7 +70,7 @@ function TableCell({
   if (stickySide) {
     style = `position: ${isColumnHeader ? 'sticky' : 'static'}; left: ${
       columnIndex * CELL_WIDTH
-    }px;`
+    }px; z-index: 1`
   }
 
   const styleNames = [isRowHeader || isColumnHeader ? 'header' : 'body']
