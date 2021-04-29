@@ -1,7 +1,9 @@
 import { html } from 'uhtml'
+
+import { TCellData } from '../../types'
 import styles from './progress.module.css'
 
-function TableCellProgress(value: string | number) {
+function TableCellProgress({ value }: TCellData) {
   const numericValue = +value
   const formatted = `${numericValue * 100}%`
 

@@ -1,4 +1,5 @@
 import { render } from 'uhtml'
+
 import { TableModel } from '../model'
 import { TTableData } from '../types'
 import { TableContainer } from './container'
@@ -38,6 +39,7 @@ function getTableModel({
     stickyHeader,
     mergeCells,
   })
+
   modelsMap.set(target, model)
 
   return model
@@ -75,6 +77,7 @@ function Table({
     stickyHeader,
     mergeCells,
   })
+
   target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
 
   function redraw() {
@@ -125,6 +128,7 @@ function Table({
     function updateHeights(index: number, table?: HTMLTableElement | null) {
       if (table) {
         const rowHeights = [...(table.children || [])].map((row) => row.clientHeight)
+
         model.setRowHeights(index, rowHeights)
       }
     }
@@ -145,4 +149,4 @@ function disposeTable(target: HTMLElement) {
   }
 }
 
-export { Table, disposeTable }
+export { disposeTable, Table }

@@ -1,4 +1,5 @@
 import { html } from 'uhtml'
+
 import { TCellData } from '../types'
 import { TableCell, TCellProps } from './cell'
 

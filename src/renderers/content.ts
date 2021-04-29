@@ -1,8 +1,9 @@
 import { html } from 'uhtml'
+
 import { TTableData } from '../types'
 import { TCellClasses, TRenderMeta } from './cell'
-import { TableRow } from './row'
 import styles from './content.module.css'
+import { TableRow } from './row'
 
 function TableContent(
   key: object,
@@ -39,6 +40,7 @@ function TableContent(
     >
       ${table.map((row, index) => {
         const rowIndex = start + index
+
         return TableRow({
           key,
           row,

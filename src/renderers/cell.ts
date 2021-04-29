@@ -1,10 +1,10 @@
 import { Hole, html } from 'uhtml'
-import { TCellData, TCellType } from '../types'
 
+import { TCellData, TCellType } from '../types'
 import styles from './cell.module.css'
-import { TableCellText } from './cellContent/text'
 import { TableCellLink } from './cellContent/link'
 import { TableCellProgress } from './cellContent/progress'
+import { TableCellText } from './cellContent/text'
 
 export type TRenderMeta = { [row: number]: { [column: number]: boolean } }
 export type TCellClasses = {
@@ -24,7 +24,7 @@ export type TCellProps = {
 
 const CELL_WIDTH = 150
 
-const renderers: Record<TCellType, (value: string | number) => Hole | string | number> = {
+const renderers: Record<TCellType, (value: TCellData) => Hole> = {
   text: TableCellText,
   link: TableCellLink,
   progress: TableCellProgress,
@@ -51,6 +51,7 @@ function TableCell({
   if (colSpan) {
     for (let i = 1; i < colSpan; ++i) {
       const rowMeta = meta[rowIndex] || {}
+
       rowMeta[columnIndex + i] = true
       meta[rowIndex] = rowMeta
     }
@@ -60,6 +61,7 @@ function TableCell({
     for (let i = 1; i < rowSpan; ++i) {
       const row = rowIndex + i
       const rowMeta = meta[row] || {}
+
       rowMeta[columnIndex] = true
       meta[row] = rowMeta
     }
@@ -93,7 +95,7 @@ function TableCell({
     style=${style}
     .dataset=${{ column: columnIndex, row: rowIndex }}
   >
-    <div class=${styles.cellContainer}>${CellContent(data.value)}</div>
+    <div class=${styles.cellContainer}>${CellContent(data)}</div>
   </td>`
 }
 

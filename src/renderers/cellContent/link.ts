@@ -1,6 +1,8 @@
 import { html } from 'uhtml'
 
-function TableCellLink(value: string | number) {
+import { TCellData } from '../../types'
+
+function TableCellLink({ value }: TCellData) {
   return html`<a target="blank" href="${value}">${value}</a>`
 }
 

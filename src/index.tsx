@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { Table, disposeTable } from './renderers/table'
+
+import { disposeTable, Table } from './renderers/table'
 import { TTableData } from './types'
 
 type TProps = {
@@ -10,7 +11,7 @@ type TProps = {
   stickyHeader?: boolean
   stickySide?: boolean
   cellClasses?: {
-    [key: string]: string
+    [key: string]: string | undefined
   }
   onCellClick?: ({}: { row: number; column: number }) => void
 }
@@ -29,6 +30,7 @@ const ReactTable: React.FC<TProps> = ({
 
   useEffect(() => {
     const target = ref.current!
+
     Table({
       table,
       target,

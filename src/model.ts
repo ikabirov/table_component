@@ -106,6 +106,7 @@ class TableModel {
     const bottom = this.scrollPosition + visibleHeight + this.additionalArea
 
     let rowInfo = this.getRowInfo(start)
+
     while (rowInfo.height + offset < top) {
       offset += rowInfo.height
       start += rowInfo.span
@@ -114,6 +115,7 @@ class TableModel {
     }
 
     let end = start
+
     rowInfo = this.getRowInfo(end)
 
     while (height + offset < bottom && end < this.data.values.length) {
