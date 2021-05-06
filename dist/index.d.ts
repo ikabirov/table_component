@@ -11,11 +11,26 @@ export declare type TCellData = {
 	type?: TCellType;
 	styles?: string[];
 	value: string | number;
+	rowResizeId?: string;
+};
+export declare type TTableResize = {
+	columns: Record<string, number>;
+	rows: Record<string, number>;
+};
+export declare type TTableCallbacks = {
+	onCellClick?: ({}: {
+		row: number;
+		column: number;
+	}) => void;
+	onRowResize?: (id: string, linesCount: number) => void;
+	onColumnResize?: (id: string, width: number) => void;
 };
 export declare type TTableData = {
 	values: TCellData[][];
 	headRowsCount: number;
 	dataHeadColumnsCount: number;
+	columnsOrder: string[];
+	resize?: TTableResize;
 };
 export declare type TProps = {
 	className?: string;
@@ -25,12 +40,10 @@ export declare type TProps = {
 	stickyHeader?: boolean;
 	stickySide?: boolean;
 	cellClasses?: {
-		[key: string]: string;
+		[key: string]: string | undefined;
 	};
-	onCellClick?: ({}: {
-		row: number;
-		column: number;
-	}) => void;
+	resize?: TTableResize;
+	callbacks?: TTableCallbacks;
 };
 export declare const ReactTable: React.FC<TProps>;
 

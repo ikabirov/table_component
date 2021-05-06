@@ -35,6 +35,7 @@ globalThis.ResizeObserver = class ResizeObserver {
 const data: TTableData = {
   headRowsCount: 1,
   dataHeadColumnsCount: 2,
+  columnsOrder: ['1', '2', '3'],
   values: [
     [{ value: 'Группа' }, { value: 'Район' }, { value: 'Сумма' }],
     [
@@ -93,6 +94,7 @@ const allTests: TTests = [
           startRowIndex: 1,
           headerRows: [],
           values: data.values.slice(1, 5),
+          columnsOrder: dataWithoutHeaderRows.columnsOrder,
         },
       },
       {
@@ -109,6 +111,7 @@ const allTests: TTests = [
           startRowIndex: 1,
           headerRows: [],
           values: data.values.slice(1, 5),
+          columnsOrder: dataWithoutHeaderRows.columnsOrder,
         },
       },
     ],
@@ -129,6 +132,7 @@ const allTests: TTests = [
               startRowIndex: 0,
               headerRows: [],
               values: data.values.slice(0, 5),
+              columnsOrder: dataWithoutHeaderRows.columnsOrder,
             },
           },
         ],
@@ -144,6 +148,7 @@ const allTests: TTests = [
           dataHeadColumnsCount: 0,
           headRowsCount: 0,
           values: [],
+          columnsOrder: [],
         },
         minRowHeight: 50,
         areaHeight: 120,
@@ -156,6 +161,7 @@ const allTests: TTests = [
           startRowIndex: 0,
           headerRows: [],
           values: [],
+          columnsOrder: [],
         },
       },
       {
@@ -172,6 +178,7 @@ const allTests: TTests = [
           startRowIndex: 1,
           headerRows: data.values.slice(0, 1),
           values: data.values.slice(1, 5),
+          columnsOrder: data.columnsOrder,
         },
       },
       {
@@ -188,6 +195,7 @@ const allTests: TTests = [
           startRowIndex: 3,
           headerRows: data.values.slice(0, 1),
           values: data.values.slice(3, 7),
+          columnsOrder: data.columnsOrder,
         },
       },
     ],
@@ -210,6 +218,7 @@ const allTests: TTests = [
           startRowIndex: 0,
           headerRows: null,
           values: data.values.slice(0, 5),
+          columnsOrder: data.columnsOrder,
         },
       },
     ],
@@ -233,6 +242,7 @@ const allTests: TTests = [
           startRowIndex: 1,
           headerRows: null,
           values: data.values.slice(1, 4),
+          columnsOrder: data.columnsOrder,
         },
       },
     ],
@@ -252,7 +262,7 @@ function runUseCase(useCase: TUseCase) {
         })
 
         model.setAreaHeight(fixture.areaHeight, fixture.additionalAreaHeight)
-        model.setScrollPosition(fixture.scrollPosition)
+        model.setScrollPosition(fixture.scrollPosition, 0)
 
         expect(model.visibleTableData).toEqual(fixture.expected)
       })

@@ -1,20 +1,26 @@
 import { html } from 'uhtml'
 
-import { TTableData } from '../types'
+import { TTableCallbacks, TTableData, TTableResize } from '../types'
 import { TCellClasses, TRenderMeta } from './cell'
 import styles from './content.module.css'
 import { TableRow } from './row'
 
+const DEFAULT_CELL_WIDTH = 150
+
 function TableContent(
   key: object,
   start: number,
-  { values: table, headRowsCount, dataHeadColumnsCount }: TTableData,
+  { values: table, headRowsCount, dataHeadColumnsCount, columnsOrder }: TTableData,
   cellClasses: TCellClasses,
   stickySide: boolean,
   mergeCells: boolean,
-  onCellClick?: ({}: { row: number; column: number }) => void
+  resize: TTableResize,
+  callbacks: TTableCallbacks
 ) {
   const meta: TRenderMeta = {}
+  const onCellClick = callbacks.onCellClick
+
+  let columnsLeft: number[] = [0]
 
   return html`
     <table
@@ -38,6 +44,13 @@ function TableContent(
           }
         : null}
     >
+      ${columnsOrder.map((columnId, index) => {
+        const width = resize.columns[columnId] || DEFAULT_CELL_WIDTH
+
+        columnsLeft[index + 1] = columnsLeft[index]! + width
+
+        return html`<col width=${width} />`
+      })}
       ${table.map((row, index) => {
         const rowIndex = start + index
 
@@ -46,12 +59,16 @@ function TableContent(
           row,
           rowIndex,
           dataHeadColumnsCount,
+          columnsLeft,
           cell: {
             isRowHeader: headRowsCount > rowIndex,
             meta,
             cellClasses,
             stickySide,
             mergeCells,
+            resize,
+            callbacks,
+            columnsOrder,
           },
         })
       })}

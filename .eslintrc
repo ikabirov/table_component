@@ -10,7 +10,8 @@
     "simple-import-sort",
     "@typescript-eslint",
     "@typescript-eslint/tslint",
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   "rules": {
     "simple-import-sort/imports": "error",
@@ -30,6 +31,8 @@
       { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
       { "blankLine": "any", "prev": ["const"], "next": ["const"] },
       { "blankLine": "any", "prev": ["let"], "next": ["let"] }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   }
 }

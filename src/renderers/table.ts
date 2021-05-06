@@ -1,7 +1,7 @@
 import { render } from 'uhtml'
 
 import { TableModel } from '../model'
-import { TTableData } from '../types'
+import { TTableCallbacks, TTableData, TTableResize } from '../types'
 import { TableContainer } from './container'
 import { TableContent } from './content'
 
@@ -51,10 +51,14 @@ function Table({
   target,
   minCellHeight = 30,
   cellClasses = {},
-  onCellClick,
+  callbacks = {},
   stickyHeader,
   stickySide,
   mergeCells,
+  resize = {
+    rows: {},
+    columns: {},
+  },
 }: {
   className?: string
   cellClasses?: {
@@ -67,7 +71,8 @@ function Table({
   mergeCells: boolean
   stickyHeader: boolean
   stickySide: boolean
-  onCellClick?: ({}: { row: number; column: number }) => void
+  resize?: TTableResize
+  callbacks?: TTableCallbacks
 }) {
   const model = getTableModel({
     table,
@@ -82,7 +87,6 @@ function Table({
 
   function redraw() {
     const data = model.visibleTableData
-
     const headers = data.headerRows
       ? TableContent(
           model,
@@ -91,11 +95,14 @@ function Table({
             dataHeadColumnsCount: data.dataHeadColumnsCount,
             headRowsCount: data.headerRows.length,
             values: data.headerRows,
+            resize: data.resize,
+            columnsOrder: data.columnsOrder,
           },
           cellClasses,
           stickySide,
           mergeCells,
-          onCellClick
+          resize,
+          callbacks
         )
       : null
     const content = TableContent(
@@ -105,7 +112,8 @@ function Table({
       cellClasses,
       stickySide,
       mergeCells,
-      onCellClick
+      resize,
+      callbacks
     )
 
     render(

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
 import { disposeTable, Table } from './renderers/table'
-import { TTableData } from './types'
+import { TTableCallbacks, TTableData, TTableResize } from './types'
 
 type TProps = {
   className?: string
@@ -13,7 +13,8 @@ type TProps = {
   cellClasses?: {
     [key: string]: string | undefined
   }
-  onCellClick?: ({}: { row: number; column: number }) => void
+  resize?: TTableResize
+  callbacks?: TTableCallbacks
 }
 
 const ReactTable: React.FC<TProps> = ({
@@ -21,10 +22,11 @@ const ReactTable: React.FC<TProps> = ({
   className,
   minCellHeight,
   cellClasses,
+  resize,
   mergeCells = true,
   stickyHeader = true,
   stickySide = true,
-  onCellClick,
+  callbacks,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -39,11 +41,16 @@ const ReactTable: React.FC<TProps> = ({
       mergeCells,
       stickyHeader,
       stickySide,
-      onCellClick,
+      callbacks,
+      resize,
     })
+  }, [table, minCellHeight, cellClasses, mergeCells, stickyHeader, stickySide, callbacks, resize])
+
+  useEffect(() => {
+    const target = ref.current!
 
     return () => disposeTable(target)
-  }, [table, className])
+  }, [])
 
   return <div ref={ref} className={className} />
 }

@@ -1,3 +1,5 @@
+import deepEqual from 'fast-deep-equal'
+
 import { TTableData } from './types'
 
 export type TVisibleTableData = TTableData & {
@@ -24,9 +26,11 @@ class TableModel {
     startRowIndex: 0,
     values: [],
     headerRows: [],
+    columnsOrder: [],
   }
 
-  public scrollPosition: number = 0
+  public scrollTop: number = 0
+  public scrollLeft: number = 0
 
   public get contentHeight() {
     return this.rowHeights.reduce((acc, current) => acc + current, 0) + 1
@@ -102,8 +106,8 @@ class TableModel {
       visibleHeight -= this.rowHeights.slice(0, start).reduce((acc, value) => acc + value, 0)
     }
 
-    const top = Math.max(0, this.scrollPosition - this.additionalArea)
-    const bottom = this.scrollPosition + visibleHeight + this.additionalArea
+    const top = Math.max(0, this.scrollTop - this.additionalArea)
+    const bottom = this.scrollTop + visibleHeight + this.additionalArea
 
     let rowInfo = this.getRowInfo(start)
 
@@ -135,6 +139,7 @@ class TableModel {
         headRowsCount: this.stickyHeader ? 0 : this.data.headRowsCount,
         values: this.data.values.slice(start, end),
         headerRows: this.stickyHeader ? this.data.values.slice(0, this.data.headRowsCount) : null,
+        columnsOrder: this.data.columnsOrder,
       }
       this.onChange()
     }
@@ -152,12 +157,14 @@ class TableModel {
   }
 
   public containSameData(data: TTableData) {
-    return this.data === data
+    return deepEqual(this.data, data)
   }
 
-  public setScrollPosition = (value: number) => {
-    if (this.scrollPosition !== value) {
-      this.scrollPosition = value
+  public setScrollPosition = (top: number, left: number) => {
+    this.scrollLeft = left
+
+    if (this.scrollTop !== top) {
+      this.scrollTop = top
       this.commit()
     }
   }

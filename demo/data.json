@@ -52,7 +52,9 @@
         "value": "Отрасль"
       },
       {
-        "value": "Сумма, %"
+        "value": "Сумма, %",
+        "columnResizeId": "columnId",
+        "rowResizeId": "columnId"
       },
       {
         "value": "Среднее 2"

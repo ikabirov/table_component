@@ -9,12 +9,14 @@ function TableRow({
   rowIndex,
   dataHeadColumnsCount,
   cell,
+  columnsLeft,
 }: {
   key: object
   row: TCellData[]
   rowIndex: number
   dataHeadColumnsCount: number
-  cell: Omit<TCellProps, 'data' | 'rowIndex' | 'columnIndex' | 'isColumnHeader'>
+  cell: Omit<TCellProps, 'data' | 'rowIndex' | 'columnIndex' | 'isColumnHeader' | 'leftOffset'>
+  columnsLeft: number[]
 }) {
   return html.for(key, rowIndex.toString())`<tr
     data-rowIndex=${rowIndex}
@@ -26,6 +28,7 @@ function TableRow({
         rowIndex,
         columnIndex,
         isColumnHeader: dataHeadColumnsCount > columnIndex,
+        leftOffset: columnsLeft[columnIndex]!,
       })
     )}
   </tr>`

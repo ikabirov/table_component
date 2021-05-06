@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ReactTable } from '../src'
-import { TTableData } from '../src/types'
+import { TTableData, TTableResize } from '../src/types'
 import styles from './styles.module.css'
 
 function App() {
@@ -10,15 +10,27 @@ function App() {
     dataHeadColumnsCount: 0,
     headRowsCount: 0,
     values: [],
+    columnsOrder: [],
+  })
+  const [resize, setResize] = useState<TTableResize>({
+    columns: {},
+    rows: {},
   })
 
   useEffect(() => {
     // const name = location.hash === '#invert' ? 'big_invert.json' : 'big.json'
-    const name = 'big.json'
-    // const name = 'data.json'
+    // const name = 'big.json'
+    const name = 'data.json'
     fetch(`./demo/${name}`)
       .then((response) => response.json())
-      .then(setData)
+      .then((data: TTableData) =>
+        setData({
+          ...data,
+          columnsOrder: new Array(data.values[0]!.length)
+            .fill('')
+            .map((_, index) => String(index % 3)),
+        })
+      )
   }, [])
 
   return (
@@ -41,10 +53,30 @@ function App() {
             header: styles.header,
             total: styles.total,
           }}
-          onCellClick={(data) => console.log(data)}
+          callbacks={{
+            onCellClick: (data) => console.log(data),
+            onColumnResize: (id, width) => {
+              setResize({
+                ...resize,
+                columns: {
+                  ...resize.columns,
+                  [id]: width,
+                },
+              })
+            },
+            onRowResize: (id, lines) =>
+              setResize({
+                ...resize,
+                rows: {
+                  ...resize.rows,
+                  [id]: lines,
+                },
+              }),
+          }}
           stickyHeader={true}
           stickySide={true}
           mergeCells={true}
+          resize={resize}
         />
       )}
     </div>

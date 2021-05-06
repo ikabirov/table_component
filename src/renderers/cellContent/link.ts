@@ -1,8 +1,8 @@
 import { html } from 'uhtml'
 
-import { TCellData } from '../../types'
+import { TCellContentRenderer } from './types'
 
-function TableCellLink({ value }: TCellData) {
+const TableCellLink: TCellContentRenderer = ({ data: { value } }) => {
   return html`<a target="blank" href="${value}">${value}</a>`
 }
 

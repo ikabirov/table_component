@@ -11,20 +11,24 @@ function TableContainer({
   setContainerElement,
   className = '',
 }: {
+  className?: string
   content: Renderable
   headers: Renderable | null
   height: number
   offset: number
-  onScroll: (value: number) => void
+  onScroll: (top: number, left: number) => void
   setContainerElement: (value: HTMLElement) => void
-  className?: string
 }) {
   return html`
     <div
       class=${`${className} ${styles.container}`}
-      ref=${setContainerElement}
+      ref=${(element: HTMLDivElement) => {
+        setContainerElement(element)
+      }}
       onscroll=${(e: MouseEvent) => {
-        onScroll((e.target as HTMLDivElement).scrollTop)
+        const { scrollLeft, scrollTop } = e.target as HTMLDivElement
+
+        onScroll(scrollTop, scrollLeft)
       }}
       onwheel=${(e: WheelEvent) => {
         if (!e.ctrlKey) {
