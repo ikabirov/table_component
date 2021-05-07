@@ -37,8 +37,6 @@ export type TCellProps = {
   leftOffset: number
 }
 
-const CELL_WIDTH = 150
-
 const renderers: Record<TCellType, TCellContentRenderer> = {
   text: TableCellText,
   link: TableCellLink,

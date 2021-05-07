@@ -13,7 +13,7 @@ const TableCellText: TCellContentRenderer = ({
   resizeSignal,
   callbacks,
 }) => {
-  let linesCount = rowResizeId ? resize?.rows?.[rowResizeId] : DEFAULT_LINES_COUNT
+  let linesCount = (rowResizeId && resize?.rows?.[rowResizeId]) || DEFAULT_LINES_COUNT
   let textElement: HTMLDivElement | null = null
 
   resizeSignal.on((info) => {
