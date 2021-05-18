@@ -135,7 +135,9 @@ function Table({
 
     function updateHeights(index: number, table?: HTMLTableElement | null) {
       if (table) {
-        const rowHeights = [...(table.children || [])].map((row) => row.clientHeight)
+        const rowHeights = [...(table.children || [])]
+          .filter((node) => node.tagName === 'TR')
+          .map((row) => row.clientHeight)
 
         model.setRowHeights(index, rowHeights)
       }
