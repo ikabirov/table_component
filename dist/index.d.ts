@@ -44,6 +44,7 @@ export declare type TProps = {
 	};
 	resize?: TTableResize;
 	callbacks?: TTableCallbacks;
+	defaultLinesCount?: number;
 };
 export declare const ReactTable: React.FC<TProps>;
 

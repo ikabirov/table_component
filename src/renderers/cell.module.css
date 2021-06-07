@@ -5,7 +5,6 @@
   word-break: break-word;
   overflow: hidden;
   box-sizing: border-box;
-  vertical-align: middle;
   position: sticky;
 }
 

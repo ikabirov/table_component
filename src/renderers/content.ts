@@ -5,6 +5,7 @@ import { TCellClasses, TRenderMeta } from './cell'
 import styles from './content.module.css'
 import { TableRow } from './row'
 
+const DEFAULT_LINES_COUNT = 2
 const DEFAULT_CELL_WIDTH = 150
 
 function TableContent(
@@ -15,7 +16,8 @@ function TableContent(
   stickySide: boolean,
   mergeCells: boolean,
   resize: TTableResize,
-  callbacks: TTableCallbacks
+  callbacks: TTableCallbacks,
+  defaultLinesCount: number = DEFAULT_LINES_COUNT
 ) {
   const meta: TRenderMeta = {}
   const onCellClick = callbacks.onCellClick
@@ -69,6 +71,7 @@ function TableContent(
             resize,
             callbacks,
             columnsOrder,
+            defaultLinesCount,
           },
         })
       })}

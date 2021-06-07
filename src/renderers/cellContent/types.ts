@@ -9,4 +9,5 @@ export type TCellContentRenderer = ({}: {
   resize: TTableResize
   resizeSignal: Signal<TResizeInfo>
   callbacks: TTableCallbacks
+  defaultLinesCount: number
 }) => Hole

@@ -5,15 +5,14 @@ import { html } from 'uhtml'
 import styles from './text.module.css'
 import { TCellContentRenderer } from './types'
 
-const DEFAULT_LINES_COUNT = 2
-
 const TableCellText: TCellContentRenderer = ({
   data: { value, rowResizeId },
   resize,
   resizeSignal,
   callbacks,
+  defaultLinesCount,
 }) => {
-  let linesCount = (rowResizeId && resize?.rows?.[rowResizeId]) || DEFAULT_LINES_COUNT
+  let linesCount = (rowResizeId && resize?.rows?.[rowResizeId]) || defaultLinesCount
   let textElement: HTMLDivElement | null = null
 
   resizeSignal.on((info) => {

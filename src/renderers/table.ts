@@ -59,6 +59,7 @@ function Table({
     rows: {},
     columns: {},
   },
+  defaultLinesCount,
 }: {
   className?: string
   cellClasses?: {
@@ -73,6 +74,7 @@ function Table({
   stickySide: boolean
   resize?: TTableResize
   callbacks?: TTableCallbacks
+  defaultLinesCount?: number
 }) {
   const model = getTableModel({
     table,
@@ -102,7 +104,8 @@ function Table({
           stickySide,
           mergeCells,
           resize,
-          callbacks
+          callbacks,
+          defaultLinesCount
         )
       : null
     const content = TableContent(
@@ -113,7 +116,8 @@ function Table({
       stickySide,
       mergeCells,
       resize,
-      callbacks
+      callbacks,
+      defaultLinesCount
     )
 
     render(

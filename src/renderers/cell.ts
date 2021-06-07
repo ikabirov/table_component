@@ -35,6 +35,7 @@ export type TCellProps = {
   stickySide: boolean
   mergeCells: boolean
   leftOffset: number
+  defaultLinesCount: number
 }
 
 const renderers: Record<TCellType, TCellContentRenderer> = {
@@ -57,6 +58,7 @@ function TableCell({
   columnsOrder,
   callbacks,
   leftOffset,
+  defaultLinesCount,
 }: TCellProps) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
@@ -115,7 +117,7 @@ function TableCell({
     .dataset=${{ column: columnIndex, row: rowIndex }}
   >
     <div class=${styles.cellContainer}>
-      ${CellContent({ data, resize, resizeSignal, callbacks })}
+      ${CellContent({ data, resize, resizeSignal, callbacks, defaultLinesCount })}
     </div>
     ${columnResizeId && (!colSpan || colSpan === 1) && onColumnResize
       ? html`<div

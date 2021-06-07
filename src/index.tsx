@@ -15,6 +15,7 @@ type TProps = {
   }
   resize?: TTableResize
   callbacks?: TTableCallbacks
+  defaultLinesCount?: number
 }
 
 const ReactTable: React.FC<TProps> = ({
@@ -27,6 +28,7 @@ const ReactTable: React.FC<TProps> = ({
   stickyHeader = true,
   stickySide = true,
   callbacks,
+  defaultLinesCount,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -43,8 +45,19 @@ const ReactTable: React.FC<TProps> = ({
       stickySide,
       callbacks,
       resize,
+      defaultLinesCount,
     })
-  }, [table, minCellHeight, cellClasses, mergeCells, stickyHeader, stickySide, callbacks, resize])
+  }, [
+    table,
+    minCellHeight,
+    cellClasses,
+    mergeCells,
+    stickyHeader,
+    stickySide,
+    callbacks,
+    resize,
+    defaultLinesCount,
+  ])
 
   useEffect(() => {
     const target = ref.current!

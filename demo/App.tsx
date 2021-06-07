@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import { ReactTable } from '../src'
 import { TTableData, TTableResize } from '../src/types'
 import styles from './styles.module.css'
@@ -21,6 +22,7 @@ function App() {
     // const name = location.hash === '#invert' ? 'big_invert.json' : 'big.json'
     // const name = 'big.json'
     const name = 'data.json'
+
     fetch(`./demo/${name}`)
       .then((response) => response.json())
       .then((data: TTableData) =>
@@ -77,6 +79,7 @@ function App() {
           stickySide={true}
           mergeCells={true}
           resize={resize}
+          defaultLinesCount={2}
         />
       )}
     </div>
