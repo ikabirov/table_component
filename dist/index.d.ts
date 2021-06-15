@@ -12,6 +12,7 @@ export declare type TCellData = {
 	styles?: string[];
 	value: string | number;
 	rowResizeId?: string;
+	styleAttribute?: string;
 };
 export declare type TTableResize = {
 	columns: Record<string, number>;

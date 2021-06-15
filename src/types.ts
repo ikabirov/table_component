@@ -7,6 +7,7 @@ export type TCellData = {
   styles?: string[]
   value: string | number
   rowResizeId?: string
+  styleAttribute?: string
 }
 
 export type TTableResize = {

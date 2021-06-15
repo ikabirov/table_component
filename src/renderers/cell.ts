@@ -94,10 +94,10 @@ function TableCell({
     }
   }
 
-  let style = ''
+  let style = data.styleAttribute || ''
 
   if (stickySide && isColumnHeader) {
-    style = `left: ${leftOffset}px; z-index: 1`
+    style += `;left: ${leftOffset}px; z-index: 1`
   }
 
   const styleNames = [isHeader ? 'header' : 'body']

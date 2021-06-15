@@ -8,7 +8,8 @@
         "value": ""
       },
       {
-        "value": "Район"
+        "value": "Район",
+        "styleAttribute": "color: red;background: antiquewhite"
       },
       {
         "span": 2,
