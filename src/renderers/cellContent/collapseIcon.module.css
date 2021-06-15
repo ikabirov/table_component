@@ -1,0 +1,9 @@
+.collapseIcon {
+  border-radius: 50%;
+  border: none;
+  margin-right: 4px;
+}
+
+.collapseIcon.expanded {
+  transform: rotate(90deg);
+}

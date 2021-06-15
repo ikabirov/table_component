@@ -16,6 +16,7 @@ type TProps = {
   resize?: TTableResize
   callbacks?: TTableCallbacks
   defaultLinesCount?: number
+  showCollapseIcons?: boolean
 }
 
 const ReactTable: React.FC<TProps> = ({
@@ -29,6 +30,7 @@ const ReactTable: React.FC<TProps> = ({
   stickySide = true,
   callbacks,
   defaultLinesCount,
+  showCollapseIcons,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -46,6 +48,7 @@ const ReactTable: React.FC<TProps> = ({
       callbacks,
       resize,
       defaultLinesCount,
+      showCollapseIcons,
     })
   }, [
     table,
@@ -57,6 +60,7 @@ const ReactTable: React.FC<TProps> = ({
     callbacks,
     resize,
     defaultLinesCount,
+    showCollapseIcons,
   ])
 
   useEffect(() => {

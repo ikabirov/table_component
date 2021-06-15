@@ -80,6 +80,7 @@ function App() {
           mergeCells={true}
           resize={resize}
           defaultLinesCount={2}
+          showCollapseIcons
         />
       )}
     </div>

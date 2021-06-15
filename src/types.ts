@@ -14,8 +14,13 @@ export type TTableResize = {
   rows: Record<string, number>
 }
 
+export type TMouseEventCallback = ({}: { row: number; column: number; event: MouseEvent }) => void
+
 export type TTableCallbacks = {
-  onCellClick?: ({}: { row: number; column: number }) => void
+  onCellClick?: TMouseEventCallback
+  onContextMenu?: TMouseEventCallback
+  onMouseOver?: TMouseEventCallback
+  onMouseOut?: TMouseEventCallback
   onRowResize?: (id: string, linesCount: number) => void
   onColumnResize?: (id: string, width: number) => void
 }

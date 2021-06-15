@@ -10,7 +10,7 @@ type TFixture = {
   scrollPosition: number
   stickyHeader?: boolean
   mergeCells?: boolean
-  expected: TVisibleTableData
+  expected: Partial<TVisibleTableData>
 }
 
 type TUseCase = {
@@ -264,7 +264,7 @@ function runUseCase(useCase: TUseCase) {
         model.setAreaHeight(fixture.areaHeight, fixture.additionalAreaHeight)
         model.setScrollPosition(fixture.scrollPosition, 0)
 
-        expect(model.visibleTableData).toEqual(fixture.expected)
+        expect(model.visibleTableData).toMatchObject(fixture.expected)
       })
     })
 

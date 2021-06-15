@@ -14,6 +14,7 @@ function getTableModel({
   minCellHeight,
   stickyHeader,
   mergeCells,
+  showCollapseIcons,
 }: {
   table: TTableData
   target: HTMLElement
@@ -21,6 +22,7 @@ function getTableModel({
   minCellHeight: number
   stickyHeader: boolean
   mergeCells: boolean
+  showCollapseIcons: boolean
 }) {
   let oldModel = modelsMap.get(target)
 
@@ -38,6 +40,7 @@ function getTableModel({
     minRowHeight: minCellHeight,
     stickyHeader,
     mergeCells,
+    showCollapseIcons,
   })
 
   modelsMap.set(target, model)
@@ -60,6 +63,7 @@ function Table({
     columns: {},
   },
   defaultLinesCount,
+  showCollapseIcons = false,
 }: {
   className?: string
   cellClasses?: {
@@ -75,6 +79,7 @@ function Table({
   resize?: TTableResize
   callbacks?: TTableCallbacks
   defaultLinesCount?: number
+  showCollapseIcons?: boolean
 }) {
   const model = getTableModel({
     table,
@@ -83,6 +88,7 @@ function Table({
     minCellHeight,
     stickyHeader,
     mergeCells,
+    showCollapseIcons,
   })
 
   target.style.setProperty('--table-min-cell-height', `${minCellHeight}px`)
@@ -90,10 +96,10 @@ function Table({
   function redraw() {
     const data = model.visibleTableData
     const headers = data.headerRows
-      ? TableContent(
-          model,
-          0,
-          {
+      ? TableContent({
+          key: model,
+          start: 0,
+          tableData: {
             dataHeadColumnsCount: data.dataHeadColumnsCount,
             headRowsCount: data.headerRows.length,
             values: data.headerRows,
@@ -105,27 +111,31 @@ function Table({
           mergeCells,
           resize,
           callbacks,
-          defaultLinesCount
-        )
+          controller: model,
+          hiddenRows: data.hiddenRows,
+          defaultLinesCount,
+        })
       : null
-    const content = TableContent(
-      target,
-      data.startRowIndex,
-      data,
+    const content = TableContent({
+      key: target,
+      start: data.startRowIndex,
+      tableData: data,
       cellClasses,
       stickySide,
       mergeCells,
       resize,
       callbacks,
-      defaultLinesCount
-    )
+      controller: model,
+      hiddenRows: data.hiddenRows,
+      defaultLinesCount,
+    })
 
     render(
       target,
       TableContainer({
         content,
         headers,
-        height: model.contentHeight,
+        height: data.contentHeight,
         offset: data.offset,
         onScroll: model.setScrollPosition,
         setContainerElement: model.setContainerElement,

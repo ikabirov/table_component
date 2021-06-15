@@ -1,9 +1,11 @@
 import { Hole, html } from 'uhtml'
 
+import { ITableController } from '../model'
 import { TCellData, TCellType, TTableCallbacks, TTableResize } from '../types'
 import { Signal } from '../utils/signal'
 import { startDrag } from '../utils/startDrag'
 import styles from './cell.module.css'
+import { CollapseIcon } from './cellContent/collapseIcon'
 import { TableCellLink } from './cellContent/link'
 import { TableCellProgress } from './cellContent/progress'
 import { TableCellText } from './cellContent/text'
@@ -21,11 +23,13 @@ export type TRenderMeta = { [row: number]: { [column: number]: boolean } }
 export type TCellClasses = {
   [key: string]: string
 }
+
 export type TCellProps = {
   data: TCellData
   resize: TTableResize
   columnsOrder: string[]
   callbacks: TTableCallbacks
+  controller: ITableController
   rowIndex: number
   columnIndex: number
   isRowHeader: boolean
@@ -59,6 +63,7 @@ function TableCell({
   callbacks,
   leftOffset,
   defaultLinesCount,
+  controller,
 }: TCellProps) {
   if (meta[rowIndex]?.[columnIndex]) {
     return []
@@ -68,6 +73,7 @@ function TableCell({
   const colSpan = isRowHeader && mergeCells ? data?.span : undefined
   const rowSpan = isColumnHeader && mergeCells ? data?.span : undefined
   const columnResizeId = columnsOrder?.[columnIndex]
+  const showCollapseIcon = controller.hasCollapseIcon(rowIndex, columnIndex)
 
   if (colSpan) {
     for (let i = 1; i < colSpan; ++i) {
@@ -108,6 +114,7 @@ function TableCell({
   const CellContent = renderers[data.type || 'text']
   const resizeSignal = new Signal<TResizeInfo>()
   const { onRowResize, onColumnResize } = callbacks
+  const collapsed = controller.isCollapsed(rowIndex, columnIndex)
 
   return html`<td
     class=${`${styles.cell} ${cellClassName}`}
@@ -117,6 +124,13 @@ function TableCell({
     .dataset=${{ column: columnIndex, row: rowIndex }}
   >
     <div class=${styles.cellContainer}>
+      ${showCollapseIcon
+        ? CollapseIcon({
+            className: '',
+            collapsed,
+            onClick: () => controller.setCollapsed({ rowIndex, columnIndex, value: !collapsed }),
+          })
+        : null}
       ${CellContent({ data, resize, resizeSignal, callbacks, defaultLinesCount })}
     </div>
     ${columnResizeId && (!colSpan || colSpan === 1) && onColumnResize
