@@ -54,6 +54,7 @@ function App() {
             body: styles.body,
             header: styles.header,
             total: styles.total,
+            collapse: styles.collapse,
           }}
           callbacks={{
             onCellClick: (data) => console.log(data),

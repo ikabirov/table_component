@@ -21,3 +21,21 @@
 .total {
   font-weight: bold;
 }
+
+.collapse {
+  border-radius: 50%;
+  border: none;
+  position: relative;
+  color: #9b9b9b;
+}
+
+.collapse::after {
+  content: '>';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1.125rem;
+  line-height: 1.375rem;
+}

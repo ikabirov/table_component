@@ -3,7 +3,7 @@ import { html } from 'uhtml'
 import styles from './collapseIcon.module.css'
 
 type TProps = {
-  className: string
+  className?: string
   onClick: () => void
   collapsed: boolean
 }
@@ -15,7 +15,7 @@ function CollapseIcon({ className, onClick, collapsed }: TProps) {
     collapseIconClass += ` ${styles.expanded}`
   }
 
-  return html`<button class=${collapseIconClass} onclick=${onClick}>></button>`
+  return html`<button class=${collapseIconClass} type="button" onclick=${onClick}></button>`
 }
 
 export { CollapseIcon }

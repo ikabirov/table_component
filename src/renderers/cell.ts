@@ -126,7 +126,7 @@ function TableCell({
     <div class=${styles.cellContainer}>
       ${showCollapseIcon
         ? CollapseIcon({
-            className: '',
+            className: cellClasses['collapse'],
             collapsed,
             onClick: () => controller.setCollapsed({ rowIndex, columnIndex, value: !collapsed }),
           })
