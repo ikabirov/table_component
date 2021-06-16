@@ -49,31 +49,31 @@ function createEventProxy(callback?: TMouseEventCallback) {
   }
 }
 
-function createTooltipEvents({ onMouseOver, onMouseOut }: TTableCallbacks) {
+function createTooltipEvents({ onCellMouseOver, onCellMouseOut }: TTableCallbacks) {
   let current: {
     row: number
     column: number
   } | null = null
 
-  const onMouseOverInternal = onMouseOver
+  const onMouseOver = onCellMouseOver
     ? createEventProxy((data) => {
         const { row, column } = data
 
         if (!current) {
           current = { row, column }
 
-          onMouseOver(data)
+          onCellMouseOver(data)
         }
       })
     : null
 
-  const onMouseOutInternal = onMouseOut
+  const onMouseOut = onCellMouseOut
     ? createEventProxy((data) => {
         if (current) {
           const { row, column } = data
 
           if (row !== current.row || column !== current.column) {
-            onMouseOut({
+            onCellMouseOut({
               ...current,
               event: data.event,
             })
@@ -84,8 +84,8 @@ function createTooltipEvents({ onMouseOver, onMouseOut }: TTableCallbacks) {
     : null
 
   return {
-    mouseOver: onMouseOverInternal,
-    mouseOut: onMouseOutInternal,
+    mouseOver: onMouseOver,
+    mouseOut: onMouseOut,
   }
 }
 
@@ -124,6 +124,8 @@ function TableContent({
     <table
       class=${styles.table}
       onclick=${createEventProxy(callbacks.onCellClick)}
+      onmousedown=${createEventProxy(callbacks.onCellMouseDown)}
+      onmouseup=${createEventProxy(callbacks.onCellMouseUp)}
       oncontextmenu=${createEventProxy(callbacks.onContextMenu)}
       onmouseover=${tooltipEvents.mouseOver}
       onmouseout=${tooltipEvents.mouseOut}

@@ -20,8 +20,10 @@ export type TMouseEventCallback = ({}: { row: number; column: number; event: Mou
 export type TTableCallbacks = {
   onCellClick?: TMouseEventCallback
   onContextMenu?: TMouseEventCallback
-  onMouseOver?: TMouseEventCallback
-  onMouseOut?: TMouseEventCallback
+  onCellMouseOver?: TMouseEventCallback
+  onCellMouseOut?: TMouseEventCallback
+  onCellMouseUp?: TMouseEventCallback
+  onCellMouseDown?: TMouseEventCallback
   onRowResize?: (id: string, linesCount: number) => void
   onColumnResize?: (id: string, width: number) => void
 }

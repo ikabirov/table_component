@@ -57,7 +57,9 @@ function App() {
             collapse: styles.collapse,
           }}
           callbacks={{
-            onCellClick: (data) => console.log(data),
+            onCellClick: (data) => console.log('click', data),
+            onCellMouseDown: (data) => console.log('mousedown', data),
+            onCellMouseUp: (data) => console.log('mouseup', data),
             onColumnResize: (id, width) => {
               setResize({
                 ...resize,

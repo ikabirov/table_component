@@ -32,10 +32,12 @@ var k=function(e){var t="fragment",n="template",s="content"in o(n)?function(e){v
           class=${ne}
           onmousedown=${e=>{const t=e.target.parentElement,n=getComputedStyle(t),s=parseInt(n.paddingTop)+parseInt(n.paddingBottom),r=null==t?void 0:t.clientHeight,o=r-s;J(e,{onDragMove:({deltaY:e})=>{t.style.height=`${r+e}px`,S.dispatch({state:"preview",size:o+e})},onDragEnd:()=>{t.style.height="",S.dispatch({state:"end"})}})}}
         ></div>`:null}
-  </td>`}function Me(e){return e?t=>{const n=function(e){let t=e.target;for(;t&&"TD"!==t.tagName&&t!==e.currentTarget;)t=t.parentElement;const{column:n,row:s}=(null==t?void 0:t.dataset)||{};if(n&&s){const e=parseInt(n,10);return{row:parseInt(s,10),column:e}}return null}(t);if(n){const{row:s,column:r}=n;e({row:s,column:r,event:t})}}:null}function Be({key:e,start:t,tableData:{values:n,headRowsCount:s,dataHeadColumnsCount:r,columnsOrder:l},cellClasses:a,stickySide:i,mergeCells:c,resize:u,callbacks:d,controller:h,hiddenRows:p,defaultLinesCount:f=2}){const m={};let g=[0];const w=function({onMouseOver:e,onMouseOut:t}){let n=null;return{mouseOver:e?Me((t=>{const{row:s,column:r}=t;n||(n={row:s,column:r},e(t))})):null,mouseOut:t?Me((e=>{if(n){const{row:s,column:r}=e;s===n.row&&r===n.column||(t(o(o({},n),{event:e.event})),n=null)}})):null}}(d);return F`
+  </td>`}function Me(e){return e?t=>{const n=function(e){let t=e.target;for(;t&&"TD"!==t.tagName&&t!==e.currentTarget;)t=t.parentElement;const{column:n,row:s}=(null==t?void 0:t.dataset)||{};if(n&&s){const e=parseInt(n,10);return{row:parseInt(s,10),column:e}}return null}(t);if(n){const{row:s,column:r}=n;e({row:s,column:r,event:t})}}:null}function Be({key:e,start:t,tableData:{values:n,headRowsCount:s,dataHeadColumnsCount:r,columnsOrder:l},cellClasses:a,stickySide:i,mergeCells:c,resize:u,callbacks:d,controller:h,hiddenRows:p,defaultLinesCount:f=2}){const m={};let g=[0];const w=function({onCellMouseOver:e,onCellMouseOut:t}){let n=null;return{mouseOver:e?Me((t=>{const{row:s,column:r}=t;n||(n={row:s,column:r},e(t))})):null,mouseOut:t?Me((e=>{if(n){const{row:s,column:r}=e;s===n.row&&r===n.column||(t(o(o({},n),{event:e.event})),n=null)}})):null}}(d);return F`
     <table
       class=${Z}
       onclick=${Me(d.onCellClick)}
+      onmousedown=${Me(d.onCellMouseDown)}
+      onmouseup=${Me(d.onCellMouseUp)}
       oncontextmenu=${Me(d.onContextMenu)}
       onmouseover=${w.mouseOver}
       onmouseout=${w.mouseOut}
