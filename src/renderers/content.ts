@@ -33,7 +33,7 @@ function getCellPosition(
   return null
 }
 
-function createEventProxy(callback?: TMouseEventCallback) {
+function createEventProxy(callback?: TMouseEventCallback, allowNull: boolean = false) {
   if (!callback) {
     return null
   }
@@ -45,43 +45,51 @@ function createEventProxy(callback?: TMouseEventCallback) {
       const { row, column } = position
 
       callback({ row, column, event })
+    } else if (allowNull) {
+      callback({ row: -1, column: -1, event })
     }
   }
 }
 
-function createTooltipEvents({ onCellMouseOver, onCellMouseOut }: TTableCallbacks) {
-  let current: {
-    row: number
-    column: number
-  } | null = null
+function createTooltipEvents(
+  { onCellMouseOver, onCellMouseOut }: TTableCallbacks,
+  controller: ITableController
+) {
+  if (!onCellMouseOver && !onCellMouseOut) {
+    return {
+      mouseOver: null,
+      mouseOut: null,
+    }
+  }
 
-  const onMouseOver = onCellMouseOver
-    ? createEventProxy((data) => {
-        const { row, column } = data
+  const onMouseOver = createEventProxy((data) => {
+    const { row, column } = data
 
-        if (!current) {
-          current = { row, column }
+    if (!controller.hoverCell) {
+      controller.hoverCell = { row, column }
 
-          onCellMouseOver(data)
+      if (onCellMouseOver) {
+        onCellMouseOver(data)
+      }
+    }
+  })
+
+  const onMouseOut = createEventProxy((data) => {
+    if (controller.hoverCell) {
+      const { row, column } = data
+
+      if (row !== controller.hoverCell.row || column !== controller.hoverCell.column) {
+        if (onCellMouseOut) {
+          onCellMouseOut({
+            ...controller.hoverCell,
+            event: data.event,
+          })
         }
-      })
-    : null
 
-  const onMouseOut = onCellMouseOut
-    ? createEventProxy((data) => {
-        if (current) {
-          const { row, column } = data
-
-          if (row !== current.row || column !== current.column) {
-            onCellMouseOut({
-              ...current,
-              event: data.event,
-            })
-            current = null
-          }
-        }
-      })
-    : null
+        controller.hoverCell = null
+      }
+    }
+  }, true)
 
   return {
     mouseOver: onMouseOver,
@@ -118,7 +126,7 @@ function TableContent({
 
   let columnsLeft: number[] = [0]
 
-  const tooltipEvents = createTooltipEvents(callbacks)
+  const tooltipEvents = createTooltipEvents(callbacks, controller)
 
   return html`
     <table

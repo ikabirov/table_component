@@ -14,6 +14,7 @@ export interface ITableController {
   setCollapsed: ({}: { rowIndex: number; columnIndex: number; value: boolean }) => void
   isCollapsed: (row: number, column: number) => boolean
   hasCollapseIcon: (row: number, column: number) => boolean
+  hoverCell: { row: number; column: number } | null
 }
 
 class TableModel implements ITableController {
@@ -29,6 +30,8 @@ class TableModel implements ITableController {
   private showCollapseIcons: boolean
   private collapseData: Record<string, boolean> = {}
   private collapseHeaders: number[][] = []
+
+  public hoverCell: ITableController['hoverCell'] = null
 
   private lastDataSnapshot: TVisibleTableData = {
     dataHeadColumnsCount: 0,
