@@ -62,8 +62,18 @@ function createTooltipEvents(
     }
   }
 
+  let requestId = 0
+
   const onMouseOver = createEventProxy((data) => {
-    const { row, column } = data
+    const { hoverCell } = controller
+    const { row, column, event } = data
+
+    if (requestId && hoverCell?.column === column && hoverCell?.row === row) {
+      cancelAnimationFrame(requestId)
+      requestId = 0
+
+      return
+    }
 
     if (!controller.hoverCell) {
       controller.hoverCell = { row, column }
@@ -75,18 +85,22 @@ function createTooltipEvents(
   })
 
   const onMouseOut = createEventProxy((data) => {
-    if (controller.hoverCell) {
+    const { hoverCell } = controller
+
+    if (hoverCell) {
       const { row, column } = data
 
-      if (row !== controller.hoverCell.row || column !== controller.hoverCell.column) {
-        if (onCellMouseOut) {
-          onCellMouseOut({
-            ...controller.hoverCell,
-            event: data.event,
-          })
-        }
+      if (row === hoverCell.row && column === hoverCell.column) {
+        requestId = requestAnimationFrame(() => {
+          if (onCellMouseOut) {
+            onCellMouseOut({
+              ...hoverCell,
+              event: data.event,
+            })
+          }
 
-        controller.hoverCell = null
+          controller.hoverCell = null
+        })
       }
     }
   }, true)

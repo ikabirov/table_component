@@ -60,6 +60,8 @@ function App() {
             onCellClick: (data) => console.log('click', data),
             onCellMouseDown: (data) => console.log('mousedown', data),
             onCellMouseUp: (data) => console.log('mouseup', data),
+            // onCellMouseOver: ({ column, row }) => console.log(`over ${row}:${column}`),
+            // onCellMouseOut: ({ column, row }) => console.log(`out ${row}:${column}`),
             onColumnResize: (id, width) => {
               setResize({
                 ...resize,
