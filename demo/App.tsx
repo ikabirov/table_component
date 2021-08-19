@@ -7,6 +7,8 @@ import styles from './styles.module.css'
 function App() {
   const [_, redraw] = useState(0)
   const [show, setShow] = useState(true)
+  const [stickyHeader, setStickyHeader] = useState(true)
+  const [stickySide, setStickySide] = useState(true)
   const [data, setData] = useState<TTableData>({
     dataHeadColumnsCount: 0,
     headRowsCount: 0,
@@ -21,7 +23,7 @@ function App() {
   useEffect(() => {
     // const name = location.hash === '#invert' ? 'big_invert.json' : 'big.json'
     // const name = 'big.json'
-    const name = 'data.json'
+    const name = 'big_invert.json'
 
     fetch(`./demo/${name}`)
       .then((response) => response.json())
@@ -39,6 +41,12 @@ function App() {
     <div>
       <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'} table</button>
       <button onClick={() => setData({ ...data })}>new data</button>
+      <button onClick={() => setStickyHeader(!stickyHeader)}>
+        turn {stickyHeader ? 'off' : 'on'} sticky header
+      </button>
+      <button onClick={() => setStickySide(!stickySide)}>
+        turn {stickySide ? 'off' : 'on'} sticky side
+      </button>
       <button
         onClick={() => {
           redraw(Math.random())
@@ -80,8 +88,8 @@ function App() {
                 },
               }),
           }}
-          stickyHeader={true}
-          stickySide={true}
+          stickyHeader={stickyHeader}
+          stickySide={stickySide}
           mergeCells={true}
           resize={resize}
           defaultLinesCount={2}

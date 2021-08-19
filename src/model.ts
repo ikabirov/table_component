@@ -231,6 +231,13 @@ class TableModel implements ITableController {
     }
   }
 
+  public setStickyHeader = (value: boolean) => {
+    if (this.stickyHeader !== value) {
+      this.stickyHeader = value
+      this.commit()
+    }
+  }
+
   public setContainerElement = (value: HTMLElement) => {
     if (this.containerElement !== value) {
       if (this.containerElement) {

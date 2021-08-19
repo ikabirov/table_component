@@ -27,6 +27,8 @@ function getTableModel({
   let oldModel = modelsMap.get(target)
 
   if (oldModel?.containSameData(table)) {
+    oldModel.setStickyHeader(stickyHeader)
+
     return oldModel
   }
 
